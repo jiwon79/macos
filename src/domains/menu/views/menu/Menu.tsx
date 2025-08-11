@@ -1,5 +1,6 @@
 import type { MenuConfig } from "domains/app/interface";
 import { MenuLeft } from "../menu-left";
+import { MenuRight } from "../menu-right";
 import {
   backgroundBlur,
   backgroundColorBurn,
@@ -19,7 +20,7 @@ export function Menu({ menus }: MenuProps) {
     >
       <div className={menuContainer}>
         <MenuLeft menus={menus} />
-        <p>RIGHT</p>
+        <MenuRight />
       </div>
       <div className={backgroundBlur} />
       <div className={backgroundColorBurn} />

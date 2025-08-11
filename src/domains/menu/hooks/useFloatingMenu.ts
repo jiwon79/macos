@@ -1,5 +1,7 @@
 import {
+  flip,
   offset,
+  shift,
   useDismiss,
   useFloating,
   useHover,
@@ -13,7 +15,7 @@ export function useFloatingMenu({ focused }: { focused: boolean }) {
     open,
     onOpenChange: setOpen,
     placement: "bottom-start",
-    middleware: [offset({ mainAxis: 2 })]
+    middleware: [offset({ mainAxis: 2 }), flip(), shift({ padding: 8 })]
   });
 
   const hover = useHover(context, { enabled: focused });
