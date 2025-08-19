@@ -1,4 +1,5 @@
 import { SettingDivider } from "../../setting/SettingDivider";
+import { SettingSubTitle } from "../../setting/SettingSubTitle";
 import { SettingTitle } from "../../setting/SettingTitle";
 import * as styles from "./WifiSettingPanel.css";
 
@@ -7,7 +8,11 @@ export function WifiSettingPanel() {
     <div className={styles.container}>
       <SettingTitle>Wi-Fi</SettingTitle>
       <SettingDivider />
-      <SettingTitle>Wi-Fi</SettingTitle>
+      <SettingSubTitle>Personal Hotspot</SettingSubTitle>
+      <SettingDivider />
+      <SettingSubTitle>Known Networks</SettingSubTitle>
+      <SettingDivider />
+      <SettingSubTitle>WiFi Settings</SettingSubTitle>
     </div>
   );
 }
