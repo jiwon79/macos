@@ -106,6 +106,45 @@ export const FONT = {
       fontSize: 13,
       lineHeight: 16 / 13
     })
+  },
+
+  bold_13: {
+    fontFamily: sanFrancisco,
+    fontWeight: 700,
+    fontSize: 13,
+    lineHeight: 16 / 13
+  },
+  regular_13: {
+    fontFamily: sanFrancisco,
+    fontWeight: 500,
+    fontSize: 13,
+    lineHeight: 16 / 13
+  },
+
+  bold_12: {
+    fontFamily: sanFrancisco,
+    fontWeight: 700,
+    fontSize: 12,
+    lineHeight: 15 / 12
+  },
+  regular_12: {
+    fontFamily: sanFrancisco,
+    fontWeight: 500,
+    fontSize: 12,
+    lineHeight: 15 / 12
+  },
+
+  bold_11: {
+    fontFamily: sanFrancisco,
+    fontWeight: 700,
+    fontSize: 11,
+    lineHeight: 14 / 11
+  },
+  regular_11: {
+    fontFamily: sanFrancisco,
+    fontWeight: 500,
+    fontSize: 11,
+    lineHeight: 14 / 11
   }
 };
 

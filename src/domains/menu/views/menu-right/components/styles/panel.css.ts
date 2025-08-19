@@ -20,6 +20,9 @@ const INNER_BOX_SHADOW_DARK = `
 
 export const settingPanel = style({
   width: 298,
+  display: "flex",
+  flexDirection: "column",
+  borderRadius: 6,
 
   backgroundColor: "rgba(224, 224, 224, 0.64)",
   boxShadow: OUTER_BOX_SHADOW,
@@ -27,12 +30,21 @@ export const settingPanel = style({
 });
 
 export const controlPanel = style({
+  width: 298,
+  display: "flex",
+  flexDirection: "column",
+  borderRadius: 20,
+
   backgroundColor: "rgba(209, 209, 209, 0.42)",
   boxShadow: OUTER_BOX_SHADOW,
   backdropFilter: "blur(60px)"
 });
 
 export const innerControlPanel = style({
+  display: "flex",
+  flexDirection: "column",
+  borderRadius: 10,
+
   backgroundColor: "rgba(231, 231, 231, 0.38)",
   boxShadow: INNER_BOX_SHADOW
 });
