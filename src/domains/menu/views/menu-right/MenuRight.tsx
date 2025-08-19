@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { ControlCenter, WifiMenu } from "./components";
+import { Control } from "./components/control/Control";
+import { WifiSetting } from "./components/wifi-setting/WifiSettingPanel";
 import { container } from "./MenuRight.css";
 
 export function MenuRight() {
@@ -31,11 +32,11 @@ export function MenuRight() {
 
   return (
     <div ref={menuRef} className={container}>
-      <WifiMenu
+      <WifiSetting
         selected={selectedItem === "wifi"}
         onSelectedChange={(selected) => onSelectedChange(selected, "wifi")}
       />
-      <ControlCenter
+      <Control
         selected={selectedItem === "control-center"}
         onSelectedChange={(selected) =>
           onSelectedChange(selected, "control-center")

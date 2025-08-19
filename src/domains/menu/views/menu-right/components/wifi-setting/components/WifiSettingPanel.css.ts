@@ -1,25 +1,16 @@
 import { style } from "@vanilla-extract/css";
-import { darkModeStyle } from "third-parties/vanilla-extract";
-import { hexAlpha } from "utils/style";
+import { settingPanel } from "../../styles/panel.css";
 
-export const container = style({
-  display: "flex",
-  flexDirection: "column",
-  borderRadius: 12,
+export const container = style([
+  settingPanel,
+  {
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: 12,
 
-  width: 300,
-  padding: 6,
-
-  border: "1px solid rgba(165, 165, 165, 0.40)",
-  background: hexAlpha("#F6F6F6", 0.6),
-  backdropFilter: "blur(30px)",
-  boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.15)"
-});
-
-darkModeStyle(container, {
-  background: hexAlpha("#000000", 0.28),
-  boxShadow: "0px 0px 0px 0.5px rgba(0, 0, 0, 0.25)"
-});
+    padding: 5
+  }
+]);
 
 export const wifiToggle = style({
   marginBottom: 12

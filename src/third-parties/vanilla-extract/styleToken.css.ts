@@ -160,3 +160,21 @@ darkModeStyle(colorProvider, {
     [COLORS.fill.quinary]: "rgba(0, 0, 0, 0.015)"
   }
 });
+
+export const BACKDROP_FILTER = {
+  panel: {
+    outer: createVar()
+  }
+};
+
+export const backdropFilterProvider = style({
+  vars: {
+    [BACKDROP_FILTER.panel.outer]: "blur(80px)"
+  }
+});
+
+darkModeStyle(backdropFilterProvider, {
+  vars: {
+    [BACKDROP_FILTER.panel.outer]: "blur(60px)"
+  }
+});

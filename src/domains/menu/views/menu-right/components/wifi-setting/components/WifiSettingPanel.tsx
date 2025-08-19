@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { NetworkItem } from "./NetworkItem";
-import * as styles from "./WifiPanel.css";
+import * as styles from "./WifiSettingPanel.css";
 
-interface WifiPanelProps {
+interface WifiSettingPanelProps {
   enabled: boolean;
   onToggle: (enabled: boolean) => void;
 }
 
-export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
+export function WifiSettingPanel({ enabled, onToggle }: WifiSettingPanelProps) {
   const [showOtherNetworks, setShowOtherNetworks] = useState(false);
 
   return (

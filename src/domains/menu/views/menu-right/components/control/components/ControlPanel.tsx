@@ -4,11 +4,11 @@ import {
   panel,
   sliderSection,
   topGrid
-} from "./ControlCenterPanel.css";
+} from "./ControlPanel.css";
 import { ControlSlider } from "./ControlSlider";
 import { ControlTile } from "./ControlTile";
 
-export function ControlCenterPanel() {
+export function ControlPanel() {
   const [brightness, setBrightness] = useState(75);
   const [volume, setVolume] = useState(60);
 

@@ -16,7 +16,6 @@ export function Desktop() {
       onMouseDown={() => setFocusedWindowID(null)}
     >
       <DesktopMenu />
-      <p className={styles.text}>Hello</p>
       <DarkModeButtonXX />
       <Windows />
       <Dock />

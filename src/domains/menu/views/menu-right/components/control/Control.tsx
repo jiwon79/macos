@@ -1,15 +1,12 @@
 import { FloatingMenu } from "domains/menu/views/floating-menu";
-import { useState } from "react";
-import { WifiPanel } from "./components";
+import { ControlPanel } from "./components/ControlPanel";
 
-interface WifiMenuProps {
+interface ControlProps {
   selected: boolean;
   onSelectedChange: (selected: boolean) => void;
 }
 
-export function WifiMenu({ selected, onSelectedChange }: WifiMenuProps) {
-  const [wifiEnabled, setWifiEnabled] = useState(true);
-
+export function Control({ selected, onSelectedChange }: ControlProps) {
   const handleClick = () => {
     onSelectedChange(!selected);
   };
@@ -21,10 +18,10 @@ export function WifiMenu({ selected, onSelectedChange }: WifiMenuProps) {
       onSelectedChange={onSelectedChange}
     >
       <FloatingMenu.Trigger type="icon" onClick={handleClick}>
-        📶
+        ⚙️
       </FloatingMenu.Trigger>
       <FloatingMenu.Content>
-        <WifiPanel enabled={wifiEnabled} onToggle={setWifiEnabled} />
+        <ControlPanel />
       </FloatingMenu.Content>
     </FloatingMenu>
   );
