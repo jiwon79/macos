@@ -8,6 +8,7 @@ export const container = style({
   flexDirection: "column",
   borderRadius: 6,
 
+  border: "0.5px solid rgba(0, 0, 0, 0.12)",
   background: hexAlpha("#FFFFFF", 0.64),
   backdropFilter: "blur(25px)",
   boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.15)",

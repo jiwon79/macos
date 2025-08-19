@@ -3,14 +3,19 @@ import react from "@vitejs/plugin-react-swc";
 import { resolve } from "path";
 import svgr from "vite-plugin-svgr";
 import { defineConfig } from "vitest/config";
+import { codeInspectorPlugin } from "code-inspector-plugin";
 
 export default defineConfig({
   plugins: [
     react(),
     vanillaExtractPlugin(),
     svgr({
-      include: "**/*.svg",
+      include: "**/*.svg"
     }),
+    codeInspectorPlugin({
+      bundler: "vite",
+      editor: "cursor"
+    })
   ],
   test: {
     globals: true,
@@ -24,6 +29,6 @@ export default defineConfig({
       utils: resolve(__dirname, "src/utils/"),
       views: resolve(__dirname, "src/views/"),
       "third-parties": resolve(__dirname, "src/third-parties/"),
-    },
-  },
+    }
+  }
 });

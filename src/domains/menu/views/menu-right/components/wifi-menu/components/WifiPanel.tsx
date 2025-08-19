@@ -1,18 +1,6 @@
 import { useState } from "react";
 import { NetworkItem } from "./NetworkItem";
-import {
-  expandButton,
-  networkList,
-  panel,
-  section,
-  sectionTitle,
-  settingsButton,
-  toggleContainer,
-  toggleLabel,
-  toggleSlider,
-  toggleSwitch,
-  wifiToggle
-} from "./WifiPanel.css";
+import * as styles from "./WifiPanel.css";
 
 interface WifiPanelProps {
   enabled: boolean;
@@ -23,20 +11,20 @@ export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
   const [showOtherNetworks, setShowOtherNetworks] = useState(false);
 
   return (
-    <div className={panel}>
+    <div className={styles.container}>
       {/* WiFi Toggle */}
-      <div className={wifiToggle}>
-        <div className={toggleContainer}>
-          <span className={toggleLabel}>Wi-Fi</span>
+      <div className={styles.wifiToggle}>
+        <div className={styles.toggleContainer}>
+          <span className={styles.toggleLabel}>Wi-Fi</span>
           <button
-            className={toggleSwitch}
+            className={styles.toggleSwitch}
             onClick={() => onToggle(!enabled)}
             style={{
               backgroundColor: enabled ? "#007AFF" : "rgba(255, 255, 255, 0.2)"
             }}
           >
             <div
-              className={toggleSlider}
+              className={styles.toggleSlider}
               style={{
                 transform: enabled ? "translateX(20px)" : "translateX(0px)"
               }}
@@ -48,9 +36,9 @@ export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
       {enabled && (
         <>
           {/* Personal Hotspot */}
-          <div className={section}>
-            <div className={sectionTitle}>Personal Hotspot</div>
-            <div className={networkList}>
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>Personal Hotspot</div>
+            <div className={styles.networkList}>
               <NetworkItem
                 icon="📱"
                 name="이지원's iPhone"
@@ -62,9 +50,9 @@ export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
           </div>
 
           {/* Known Networks */}
-          <div className={section}>
-            <div className={sectionTitle}>Known Network</div>
-            <div className={networkList}>
+          <div className={styles.section}>
+            <div className={styles.sectionTitle}>Known Network</div>
+            <div className={styles.networkList}>
               <NetworkItem
                 icon="📶"
                 name="TP-Link_F0DC"
@@ -77,15 +65,15 @@ export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
           </div>
 
           {/* Other Networks */}
-          <div className={section}>
+          <div className={styles.section}>
             <button
-              className={expandButton}
+              className={styles.expandButton}
               onClick={() => setShowOtherNetworks(!showOtherNetworks)}
             >
               Other Networks {showOtherNetworks ? "▲" : "▶"}
             </button>
             {showOtherNetworks && (
-              <div className={networkList}>
+              <div className={styles.networkList}>
                 <NetworkItem
                   icon="📶"
                   name="Network1"
@@ -105,7 +93,7 @@ export function WifiPanel({ enabled, onToggle }: WifiPanelProps) {
           </div>
 
           {/* WiFi Settings */}
-          <button className={settingsButton}>Wi-Fi Settings...</button>
+          <button className={styles.settingsButton}>Wi-Fi Settings...</button>
         </>
       )}
     </div>

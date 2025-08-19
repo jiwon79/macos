@@ -3,7 +3,7 @@ import useFocusMenu from "domains/menu/hooks/useFocusMenu";
 import { useState } from "react";
 import { MenuAppleLogo } from "./components";
 import { MenuItem } from "./components/menu-item";
-import { contianer } from "./MenuLeft.css";
+import { container } from "./MenuLeft.css";
 
 interface MenuLeftProps {
   menus: MenuConfig[];
@@ -24,7 +24,7 @@ export function MenuLeft({ menus }: MenuLeftProps) {
   };
 
   return (
-    <div ref={menuRef} className={contianer}>
+    <div ref={menuRef} className={container}>
       <MenuAppleLogo
         focused={focused}
         selected={selectedMenu === "Apple"}
