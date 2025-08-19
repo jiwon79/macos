@@ -1,4 +1,5 @@
-import { fontFace, style } from "@vanilla-extract/css";
+import { createVar, fontFace, style } from "@vanilla-extract/css";
+import { darkModeStyle } from "./darkModeStyle";
 
 export const sanFrancisco = fontFace([
   {
@@ -107,3 +108,55 @@ export const FONT = {
     })
   }
 };
+
+export const COLORS = {
+  white: "rgba(255, 255, 255, 1)",
+
+  text: {
+    primary: createVar(),
+    secondary: createVar(),
+    tertiary: createVar(),
+    quaternary: createVar(),
+    quinary: createVar()
+  },
+
+  fill: {
+    primary: createVar(),
+    secondary: createVar(),
+    tertiary: createVar(),
+    quaternary: createVar(),
+    quinary: createVar()
+  }
+};
+
+export const colorProvider = style({
+  vars: {
+    [COLORS.text.primary]: "rgba(0, 0, 0, 0.85)",
+    [COLORS.text.secondary]: "rgba(0, 0, 0, 0.50)",
+    [COLORS.text.tertiary]: "rgba(0, 0, 0, 0.25)",
+    [COLORS.text.quaternary]: "rgba(0, 0, 0, 0.10)",
+    [COLORS.text.quinary]: "rgba(0, 0, 0, 0.05)",
+
+    [COLORS.fill.primary]: "rgba(255, 255, 255, 0.10)",
+    [COLORS.fill.secondary]: "rgba(255, 255, 255, 0.08)",
+    [COLORS.fill.tertiary]: "rgba(255, 255, 255, 0.05)",
+    [COLORS.fill.quaternary]: "rgba(255, 255, 255, 0.03)",
+    [COLORS.fill.quinary]: "rgba(255, 255, 255, 0.015)"
+  }
+});
+
+darkModeStyle(colorProvider, {
+  vars: {
+    [COLORS.text.primary]: "rgba(255, 255, 255, 0.85)",
+    [COLORS.text.secondary]: "rgba(255, 255, 255, 0.55)",
+    [COLORS.text.tertiary]: "rgba(255, 255, 255, 0.25)",
+    [COLORS.text.quaternary]: "rgba(255, 255, 255, 0.10)",
+    [COLORS.text.quinary]: "rgba(255, 255, 255, 0.05)",
+
+    [COLORS.fill.primary]: "rgba(0, 0, 0, 0.10)",
+    [COLORS.fill.secondary]: "rgba(0, 0, 0, 0.08)",
+    [COLORS.fill.tertiary]: "rgba(0, 0, 0, 0.05)",
+    [COLORS.fill.quaternary]: "rgba(0, 0, 0, 0.03)",
+    [COLORS.fill.quinary]: "rgba(0, 0, 0, 0.015)"
+  }
+});

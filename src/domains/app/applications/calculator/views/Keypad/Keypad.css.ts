@@ -1,4 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
+import { COLORS } from "third-parties/vanilla-extract";
 import { calcColorTokens } from "../theme.css";
 
 export const keypad = recipe({
@@ -8,7 +9,8 @@ export const keypad = recipe({
     alignItems: "center",
     outline: "none",
     border: "none",
-    fontSize: 21
+    fontSize: 21,
+    color: COLORS.white
   },
   variants: {
     type: {

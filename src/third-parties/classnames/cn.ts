@@ -1,3 +1,1 @@
-import { default as cn } from "classnames";
-
-export { cn };
+export { default as cn } from "classnames";
