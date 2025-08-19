@@ -176,11 +176,11 @@ export const colorProvider = style({
     [COLORS.text.quaternary]: "rgba(0, 0, 0, 0.10)",
     [COLORS.text.quinary]: "rgba(0, 0, 0, 0.05)",
 
-    [COLORS.fill.primary]: "rgba(255, 255, 255, 0.10)",
-    [COLORS.fill.secondary]: "rgba(255, 255, 255, 0.08)",
-    [COLORS.fill.tertiary]: "rgba(255, 255, 255, 0.05)",
-    [COLORS.fill.quaternary]: "rgba(255, 255, 255, 0.03)",
-    [COLORS.fill.quinary]: "rgba(255, 255, 255, 0.015)"
+    [COLORS.fill.primary]: "rgba(0, 0, 0, 0.10)",
+    [COLORS.fill.secondary]: "rgba(0, 0, 0, 0.08)",
+    [COLORS.fill.tertiary]: "rgba(0, 0, 0, 0.05)",
+    [COLORS.fill.quaternary]: "rgba(0, 0, 0, 0.03)",
+    [COLORS.fill.quinary]: "rgba(0, 0, 0, 0.015)"
   }
 });
 
@@ -192,11 +192,11 @@ darkModeStyle(colorProvider, {
     [COLORS.text.quaternary]: "rgba(255, 255, 255, 0.10)",
     [COLORS.text.quinary]: "rgba(255, 255, 255, 0.05)",
 
-    [COLORS.fill.primary]: "rgba(0, 0, 0, 0.10)",
-    [COLORS.fill.secondary]: "rgba(0, 0, 0, 0.08)",
-    [COLORS.fill.tertiary]: "rgba(0, 0, 0, 0.05)",
-    [COLORS.fill.quaternary]: "rgba(0, 0, 0, 0.03)",
-    [COLORS.fill.quinary]: "rgba(0, 0, 0, 0.015)"
+    [COLORS.fill.primary]: "rgba(255, 255, 255, 0.10)",
+    [COLORS.fill.secondary]: "rgba(255, 255, 255, 0.08)",
+    [COLORS.fill.tertiary]: "rgba(255, 255, 255, 0.05)",
+    [COLORS.fill.quaternary]: "rgba(255, 255, 255, 0.03)",
+    [COLORS.fill.quinary]: "rgba(255, 255, 255, 0.015)"
   }
 });
 
