@@ -1,3 +1,4 @@
+import { IconWifi } from "assets/icons";
 import { FloatingMenu } from "domains/menu/views/floating-menu";
 import { WifiSettingPanel } from "./components/WifiSettingPanel";
 
@@ -13,7 +14,9 @@ export function WifiSetting({ selected, onSelectedChange }: WifiSettingProps) {
       selected={selected}
       onSelectedChange={onSelectedChange}
     >
-      <FloatingMenu.Trigger type="icon">📶</FloatingMenu.Trigger>
+      <FloatingMenu.Trigger type="icon">
+        <IconWifi />
+      </FloatingMenu.Trigger>
       <FloatingMenu.Content>
         <WifiSettingPanel />
       </FloatingMenu.Content>

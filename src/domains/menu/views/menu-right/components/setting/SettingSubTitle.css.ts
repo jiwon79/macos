@@ -10,8 +10,6 @@ export const container = recipe({
     paddingLeft: 9,
     paddingRight: 9,
     height: 26,
-    marginTop: 2,
-    marginBottom: 2,
     borderRadius: 5
   },
   variants: {
@@ -36,3 +34,8 @@ export const title = style([
     flexGrow: 1
   }
 ]);
+
+export const accessory = style({
+  flexShrink: 0,
+  color: COLORS.text.primary
+});

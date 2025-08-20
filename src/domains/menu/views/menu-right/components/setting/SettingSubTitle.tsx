@@ -15,7 +15,9 @@ export function SettingSubTitle({
   return (
     <div className={styles.container({ disabled })}>
       <span className={styles.title}>{children}</span>
-      {rightAccessory}
+      {rightAccessory && (
+        <div className={styles.accessory}>{rightAccessory}</div>
+      )}
     </div>
   );
 }

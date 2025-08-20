@@ -114,7 +114,7 @@ export const FONT = {
     fontSize: 13,
     lineHeight: 16 / 13
   },
-  regular_13: {
+  medium_13: {
     fontFamily: sanFrancisco,
     fontWeight: 500,
     fontSize: 13,
@@ -127,7 +127,7 @@ export const FONT = {
     fontSize: 12,
     lineHeight: 15 / 12
   },
-  regular_12: {
+  medium_12: {
     fontFamily: sanFrancisco,
     fontWeight: 500,
     fontSize: 12,
@@ -140,7 +140,7 @@ export const FONT = {
     fontSize: 11,
     lineHeight: 14 / 11
   },
-  regular_11: {
+  medium_11: {
     fontFamily: sanFrancisco,
     fontWeight: 500,
     fontSize: 11,
@@ -150,6 +150,7 @@ export const FONT = {
 
 export const COLORS = {
   white: "rgba(255, 255, 255, 1)",
+  blue: createVar(),
 
   text: {
     primary: createVar(),
@@ -170,6 +171,8 @@ export const COLORS = {
 
 export const colorProvider = style({
   vars: {
+    [COLORS.blue]: "#007AFF",
+
     [COLORS.text.primary]: "rgba(0, 0, 0, 0.85)",
     [COLORS.text.secondary]: "rgba(0, 0, 0, 0.50)",
     [COLORS.text.tertiary]: "rgba(0, 0, 0, 0.25)",
@@ -186,6 +189,8 @@ export const colorProvider = style({
 
 darkModeStyle(colorProvider, {
   vars: {
+    [COLORS.blue]: "#0A84FF",
+
     [COLORS.text.primary]: "rgba(255, 255, 255, 0.85)",
     [COLORS.text.secondary]: "rgba(255, 255, 255, 0.55)",
     [COLORS.text.tertiary]: "rgba(255, 255, 255, 0.25)",
