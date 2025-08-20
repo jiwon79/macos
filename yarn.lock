@@ -172,11 +172,11 @@
   integrity sha512-EOv5IK8arwh3LI47dz1b0tKUb/1uhHAnHJOrjgtQMIpu1uXd9mlFrJg9IUgGUgZ41Ch0K8REPTYpO7B76b4vJg==
 
 "@babel/parser@^7.28.0":
-  version "7.28.0"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.28.0.tgz#979829fbab51a29e13901e5a80713dbcb840825e"
-  integrity sha512-jVZGvOxOuNSsuQuLRTh13nU0AogFlw32w/MT+LV6D3sP5WdbW61E77RnkbaO2dUvmPAYrBDJXGn5gGS6tH4j8g==
+  version "7.28.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.28.3.tgz#d2d25b814621bca5fe9d172bc93792547e7a2a71"
+  integrity sha512-7+Ey1mAgYqFAx2h0RuoxcQT5+MlG3GTV0TQrgr7/ZliKsm/MNDxVVutlWaziMq7wJNAz8MTqz55XLpWvva6StA==
   dependencies:
-    "@babel/types" "^7.28.0"
+    "@babel/types" "^7.28.2"
 
 "@babel/plugin-syntax-typescript@^7.20.0":
   version "7.24.1"
@@ -226,7 +226,7 @@
     "@babel/helper-validator-identifier" "^7.24.5"
     to-fast-properties "^2.0.0"
 
-"@babel/types@^7.28.0":
+"@babel/types@^7.28.2":
   version "7.28.2"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.28.2.tgz#da9db0856a9a88e0a13b019881d7513588cf712b"
   integrity sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==
@@ -287,6 +287,54 @@
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/@biomejs/cli-win32-x64/-/cli-win32-x64-2.1.3.tgz#b7ac23a4636ebb8ae6036ee5c65b065a4072f4c4"
   integrity sha512-dxy599q6lgp8ANPpR8sDMscwdp9oOumEsVXuVCVT9N2vAho8uYXlCz53JhxX6LtJOXaE73qzgkGQ7QqvFlMC0g==
+
+"@code-inspector/core@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/core/-/core-1.2.2.tgz#5db77454b1426bc9f70ff9d865487f7fa84ab132"
+  integrity sha512-MQUxqP90y5yyL5v0Mhyw2L2FeIMjrTfg5tLquuexrMnVPVoreziKWvGh30Eyx7Kg9wFtpaSKa3IAWPfg7xh42g==
+  dependencies:
+    "@vue/compiler-dom" "^3.5.13"
+    chalk "^4.1.1"
+    dotenv "^16.1.4"
+    launch-ide "1.1.1"
+    portfinder "^1.0.28"
+
+"@code-inspector/esbuild@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/esbuild/-/esbuild-1.2.2.tgz#ce39071ca991c647bbd0988465fa4def9f54f52c"
+  integrity sha512-0A9qVvvHI/hlnVwH2N/IjqnOnExnVo6cMiHxLTNwCu2vE6XTNdRnagHhBMd1CV/LJnMQZmwrmsS+ktBvaBxS7A==
+  dependencies:
+    "@code-inspector/core" "1.2.2"
+
+"@code-inspector/mako@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/mako/-/mako-1.2.2.tgz#9f2d0bba98bdec92662d1fd6516179ff6314508f"
+  integrity sha512-LYLyTrWIPuW7DUZ44jxJ8O9OdObHUNSo4Dxxdh1uZKNj741g5qXtpWMgHZpWzhYy4AyjLViC89KpnbU/HssB3A==
+  dependencies:
+    "@code-inspector/core" "1.2.2"
+
+"@code-inspector/turbopack@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/turbopack/-/turbopack-1.2.2.tgz#5f57e4333d50d3d2feae1a23dfcc1fd290dd92b4"
+  integrity sha512-FOtTqTHvLKlgI3y/mTngDqkVChOMSHeutjyWBMGB0YHp3ZNhfddMl1i8/hTDqTvNhQZSMbREirwg4VBT7AzJpw==
+  dependencies:
+    "@code-inspector/core" "1.2.2"
+    "@code-inspector/webpack" "1.2.2"
+
+"@code-inspector/vite@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/vite/-/vite-1.2.2.tgz#cc9327d22f1ebf1ac3c93e3471713bcb230ec7c4"
+  integrity sha512-VvQ2n+UVIpiIrhUarvEb/JZiJdWDHsPIUcIt0Z61AbWEz7vN/fWNelPyHiGgLRCG5bdvjrPHruVpo2bj5TYJKQ==
+  dependencies:
+    "@code-inspector/core" "1.2.2"
+    chalk "4.1.1"
+
+"@code-inspector/webpack@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@code-inspector/webpack/-/webpack-1.2.2.tgz#464dc92c52ef9a553d47d02b999baee9c4627c58"
+  integrity sha512-Y9urfrHoB81IkscKCc/cmLe5IV364RNQHz7HUj7RSOhCAwMsZC6oXrsh36LhDHfk7rdjgL2/JGPRhHAZgWYnIw==
+  dependencies:
+    "@code-inspector/core" "1.2.2"
 
 "@emotion/hash@^0.9.0":
   version "0.9.1"
@@ -1227,28 +1275,18 @@ classnames@^2.5.1:
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.5.1.tgz#ba774c614be0f016da105c858e7159eae8e7687b"
   integrity sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==
 
-code-inspector-core@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/code-inspector-core/-/code-inspector-core-1.0.4.tgz#5728219f6c170a59ad53390e6d9dd294c7d5af43"
-  integrity sha512-z1X12ePVRTLbVEn8rzGRPf1Wn30ZwocOeP14OXd7rOEAe1cCrZ4nLxXhYRI2Id1LjHl7RagW7IVGYXxxAUM6vg==
-  dependencies:
-    "@vue/compiler-dom" "^3.5.13"
-    chalk "^4.1.1"
-    dotenv "^16.1.4"
-    launch-ide "1.1.1"
-    portfinder "^1.0.28"
-
 code-inspector-plugin@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/code-inspector-plugin/-/code-inspector-plugin-1.0.4.tgz#efdff1030bbb42dbee1af05bd9224076c1e7ebcf"
-  integrity sha512-afLHSRs5B3ly6dRd8jADxE+TNKGxGsW1p55V6wYxfEzgJUFwsXaqN0ZESraLJQ28MBeG8azUtbCgseDFtZfpsA==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/code-inspector-plugin/-/code-inspector-plugin-1.2.2.tgz#f1df1360bf78134d3beeec11c8afc933804a177d"
+  integrity sha512-unc4VEii3mBCqrUOILHuexJ1pHP2FHqXWCJXYSdqHArIpE9POO5Gt9JqWZH3irS6cvnLfbKcE6l8pPisKcCU4g==
   dependencies:
+    "@code-inspector/core" "1.2.2"
+    "@code-inspector/esbuild" "1.2.2"
+    "@code-inspector/mako" "1.2.2"
+    "@code-inspector/turbopack" "1.2.2"
+    "@code-inspector/vite" "1.2.2"
+    "@code-inspector/webpack" "1.2.2"
     chalk "4.1.1"
-    code-inspector-core "1.0.4"
-    esbuild-code-inspector-plugin "1.0.4"
-    turbopack-code-inspector-plugin "1.0.4"
-    vite-code-inspector-plugin "1.0.4"
-    webpack-code-inspector-plugin "1.0.4"
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -1437,13 +1475,6 @@ error-ex@^1.3.1:
   integrity sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==
   dependencies:
     is-arrayish "^0.2.1"
-
-esbuild-code-inspector-plugin@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/esbuild-code-inspector-plugin/-/esbuild-code-inspector-plugin-1.0.4.tgz#f66a1f13647ac642895743a1f9d5bb5fd73388c5"
-  integrity sha512-CzJEesouEcPZsUnOBjV6/jVhMellZJMPVtYgrX+0c8CLoQbXskzNhb3//8kWPfXIyD0z68NDOkBI7PGg5LbdYQ==
-  dependencies:
-    code-inspector-core "1.0.4"
 
 esbuild@^0.21.3:
   version "0.21.5"
@@ -2305,14 +2336,6 @@ tslib@^2.0.3, tslib@^2.4.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
-turbopack-code-inspector-plugin@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/turbopack-code-inspector-plugin/-/turbopack-code-inspector-plugin-1.0.4.tgz#23bf8130f5dde646d4104335dab47c02483e83df"
-  integrity sha512-jfjQpx6ikJH+NycVVca259b9DwioHjN8l39q/omHlAEJOghmZYGE/WveBwIgxLTadW12ar2WvJ6WbbmMB/3vUw==
-  dependencies:
-    code-inspector-core "1.0.4"
-    webpack-code-inspector-plugin "1.0.4"
-
 type-detect@^4.0.0, type-detect@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
@@ -2365,13 +2388,6 @@ utrie@^1.0.2:
   integrity sha512-1MLa5ouZiOmQzUbjbu9VmjLzn1QLXBhwpUa7kdLUQK+KQ5KA9I1vk5U4YHe/X2Ch7PYnJfWuWT+VbuxbGwljhw==
   dependencies:
     base64-arraybuffer "^1.0.2"
-
-vite-code-inspector-plugin@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/vite-code-inspector-plugin/-/vite-code-inspector-plugin-1.0.4.tgz#ead618bbd5649c83502386fdff400eaf044cb0aa"
-  integrity sha512-ALJBG3JpHqdxmeSrzFPzDLYyGjhtM9wI/9+bUif0zO4XDOdQHao9YswOsG59EbnQYMA6e7U53CzajxbKRxTbOg==
-  dependencies:
-    code-inspector-core "1.0.4"
 
 vite-node@1.6.1, vite-node@^1.2.0:
   version "1.6.1"
@@ -2441,13 +2457,6 @@ webidl-conversions@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
-
-webpack-code-inspector-plugin@1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/webpack-code-inspector-plugin/-/webpack-code-inspector-plugin-1.0.4.tgz#39189b2958aae96d4494b97f0c84827b76819899"
-  integrity sha512-GQpniQQiq5mTqhJifZHJhJR4lXzNJAiq0WLXfe95vp2aclrvytXl/fd/9YSsR/sujP1xWq/oe5FKNILX7F6jjA==
-  dependencies:
-    code-inspector-core "1.0.4"
 
 whatwg-encoding@^3.1.1:
   version "3.1.1"

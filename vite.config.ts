@@ -14,7 +14,7 @@ export default defineConfig({
     }),
     codeInspectorPlugin({
       bundler: "vite",
-      editor: "cursor"
+      editor: "zed"
     })
   ],
   test: {

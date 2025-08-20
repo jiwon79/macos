@@ -8,9 +8,8 @@ export const container = style({
   gap: 8,
   padding: "3px 9px",
   height: 28,
-  borderRadius: 5,
+  borderRadius: 6,
   cursor: "pointer",
-  transition: "background-color 0.10s ease",
 
   ":hover": {
     backgroundColor: COLORS.fill.primary

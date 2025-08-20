@@ -80,6 +80,7 @@ export const FONT = {
     regular: style({
       fontFamily: "Pretendard",
       fontWeight: 700,
+
       fontSize: 13,
       lineHeight: 16 / 13
     }),
@@ -136,7 +137,9 @@ export const FONT = {
 
   bold_11: {
     fontFamily: sanFrancisco,
+
     fontWeight: 700,
+
     fontSize: 11,
     lineHeight: 14 / 11
   },

@@ -2,6 +2,7 @@ import { IconHotspot, IconRightArrow, IconWifi } from "assets/icons";
 import { SettingDivider } from "../../setting/SettingDivider";
 import { SettingItem } from "../../setting/SettingItem";
 import { SettingSubTitle } from "../../setting/SettingSubTitle";
+import { SettingTextItem } from "../../setting/SettingTextItem";
 import { SettingTitle } from "../../setting/SettingTitle";
 import * as styles from "./WifiSettingPanel.css";
 
@@ -15,7 +16,7 @@ export function WifiSettingPanel() {
       <SettingDivider />
       <SettingSubTitle>Known Networks</SettingSubTitle>
       <SettingItem icon={<IconWifi />} selected>
-        ipTime
+        Starbucks
       </SettingItem>
       <SettingItem icon={<IconWifi />}>Jiwon's Home</SettingItem>
       <SettingItem icon={<IconWifi />}>Jiwon's Home_5G</SettingItem>
@@ -24,7 +25,7 @@ export function WifiSettingPanel() {
         Other Networks
       </SettingSubTitle>
       <SettingDivider />
-      <SettingSubTitle>WiFi Settings</SettingSubTitle>
+      <SettingTextItem>WiFi Settings</SettingTextItem>
     </div>
   );
 }

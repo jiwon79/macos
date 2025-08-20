@@ -10,7 +10,7 @@ export const container = recipe({
     paddingLeft: 9,
     paddingRight: 9,
     height: 26,
-    borderRadius: 5
+    borderRadius: 6
   },
   variants: {
     disabled: {
