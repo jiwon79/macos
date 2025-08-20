@@ -7,7 +7,8 @@ export const container = style({
   justifyContent: "space-between",
   paddingLeft: 9,
   paddingRight: 9,
-  height: 32
+  height: 32,
+  userSelect: "none"
 });
 
 export const title = style([

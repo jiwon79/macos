@@ -7,10 +7,10 @@ export const container = recipe({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingLeft: 9,
-    paddingRight: 9,
+    padding: "0 9px",
     height: 26,
-    borderRadius: 6
+    borderRadius: 6,
+    userSelect: "none"
   },
   variants: {
     disabled: {

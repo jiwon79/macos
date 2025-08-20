@@ -10,6 +10,7 @@ export const container = style({
   height: 28,
   borderRadius: 6,
   cursor: "pointer",
+  userSelect: "none",
 
   ":hover": {
     backgroundColor: COLORS.fill.primary

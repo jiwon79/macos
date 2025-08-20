@@ -8,7 +8,7 @@ export const container = recipe({
     alignItems: "center",
     borderRadius: 6,
     cursor: "pointer",
-    transition: "background-color 0.10s ease",
+    userSelect: "none",
 
     ":hover": {
       backgroundColor: COLORS.fill.primary
