@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Control } from "./components/control/Control";
-import { WifiSetting } from "./components/wifi-setting/WifiSettingPanel";
+import { WifiSetting } from "./components/wifi-setting/WifiSetting";
 import { container } from "./MenuRight.css";
 
 export function MenuRight() {
