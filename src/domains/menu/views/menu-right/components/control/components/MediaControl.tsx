@@ -1,40 +1,26 @@
-import { useState } from "react";
+import { IconPlay, IconPlayNext } from "assets/icons";
 import {
   appIcon,
   appName,
   controlButton,
+  leftGroup,
   mediaContainer,
-  mediaControls,
-  mediaInfo,
-  songInfo
+  mediaControls
 } from "./MediaControl.css";
 
 export function MediaControl() {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  const nextTrack = () => {
-    // Next track functionality
-  };
-
   return (
     <div className={mediaContainer}>
-      <div className={appIcon}>🎵</div>
-
-      <div className={mediaInfo}>
-        <div className={appName}>Music</div>
-        <div className={songInfo}>Not Playing</div>
+      <div className={leftGroup}>
+        <div className={appIcon} />
+        <span className={appName}>Music.app</span>
       </div>
-
       <div className={mediaControls}>
-        <button className={controlButton} onClick={togglePlay}>
-          {isPlaying ? "⏸" : "▶️"}
+        <button type="button" className={controlButton}>
+          <IconPlay />
         </button>
-        <button className={controlButton} onClick={nextTrack}>
-          ⏭
+        <button type="button" className={controlButton}>
+          <IconPlayNext />
         </button>
       </div>
     </div>

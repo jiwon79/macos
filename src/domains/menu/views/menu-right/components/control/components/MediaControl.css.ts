@@ -5,68 +5,63 @@ import { innerControlPanel } from "../../styles/panel.css";
 export const mediaContainer = style([
   innerControlPanel,
   {
-    height: 52,
-    padding: 8,
+    boxSizing: "border-box",
+    width: "100%",
+    height: 62,
+    padding: "5px 10px",
     display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    gap: 8
+    justifyContent: "space-between",
+    overflow: "hidden"
   }
 ]);
 
-export const appIcon = style({
-  width: 32,
-  height: 32,
-  borderRadius: 6,
+export const leftGroup = style({
   display: "flex",
   alignItems: "center",
-  justifyContent: "center",
-  fontSize: 16,
-  backgroundColor: "#ff3b30",
+  gap: 8,
+  minWidth: 0,
+  flex: 1
+});
+
+export const appIcon = style({
+  width: 42,
+  height: 42,
+  borderRadius: 2,
+  backgroundColor: COLORS.fill.primary,
   flexShrink: 0
 });
 
-export const mediaInfo = style({
-  display: "flex",
-  flexDirection: "column",
-  flex: 1,
-  gap: 2
-});
-
 export const appName = style([
-  FONT.medium_12,
+  FONT.bold_11,
   {
-    color: COLORS.text.primary
-  }
-]);
-
-export const songInfo = style([
-  FONT.medium_11,
-  {
-    color: COLORS.text.secondary,
-    fontSize: 10
+    color: COLORS.text.primary,
+    letterSpacing: 0.22,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis"
   }
 ]);
 
 export const mediaControls = style({
   display: "flex",
   alignItems: "center",
-  gap: 8,
   flexShrink: 0
 });
 
 export const controlButton = style({
-  width: 20,
-  height: 20,
+  width: 26,
+  height: 26,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   background: "none",
   border: "none",
   color: COLORS.text.primary,
-  fontSize: 16,
   cursor: "pointer",
   borderRadius: 4,
-  transition: "all 150ms ease",
+  padding: 0,
 
   ":hover": {
     backgroundColor: COLORS.fill.tertiary

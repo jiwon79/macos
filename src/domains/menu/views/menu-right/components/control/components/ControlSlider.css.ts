@@ -12,7 +12,7 @@ const Z_INDEX = {
 export const sliderContainer = style({
   position: "relative",
   height: 22,
-  width: 256,
+  width: "100%",
   borderRadius: 100,
   backgroundColor: COLORS.fill.primary
 });

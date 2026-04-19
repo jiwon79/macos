@@ -1,115 +1,123 @@
-import { IconBrightness, IconSound } from "assets/icons";
-import { useState } from "react";
-import { cn } from "third-parties/classnames";
 import {
-  controlsGrid,
-  controlTile,
-  controlTileDisabled,
-  controlTileIcon,
-  controlTileLabel,
-  controlTileSubtitle,
-  controlTileWide,
-  panel,
-  slidersContainer
-} from "./ControlPanel.css";
+  IconAirDrop,
+  IconAirPlay,
+  IconBluetooth,
+  IconBrightness,
+  IconFocus,
+  IconRightArrow,
+  IconScreenMirroring,
+  IconSound,
+  IconStageManager,
+  IconWifi
+} from "assets/icons";
+import { useState } from "react";
+import * as styles from "./ControlPanel.css";
 import { ControlSlider } from "./ControlSlider";
+import { IconCircle } from "./IconCircle";
 import { MediaControl } from "./MediaControl";
 
 export function ControlPanel() {
-  const [brightness, setBrightness] = useState(75);
-  const [volume, setVolume] = useState(60);
-  const [wifiEnabled, setWifiEnabled] = useState(true);
-  const [bluetoothEnabled, setBluetoothEnabled] = useState(true);
-  const [airdropEnabled, setAirdropEnabled] = useState(true);
-  const [focusMode, setFocusMode] = useState(false);
+  const [brightness, setBrightness] = useState(50);
+  const [volume, setVolume] = useState(50);
 
   return (
-    <div className={panel}>
-      {/* Top Controls Grid */}
-      <div className={controlsGrid}>
-        {/* WiFi Tile */}
-        <div
-          className={cn(controlTile, { [controlTileDisabled]: !wifiEnabled })}
-          onClick={() => setWifiEnabled(!wifiEnabled)}
-        >
-          <div className={controlTileIcon}>📶</div>
-          <div className={controlTileLabel}>Wi-Fi</div>
-          <div className={controlTileSubtitle}>
-            {wifiEnabled ? "Connected" : "Off"}
+    <div className={styles.panel}>
+      <div className={styles.topRow}>
+        <div className={styles.connectivityTile}>
+          <div className={styles.connectivityRow}>
+            <IconCircle variant="blue">
+              <IconWifi />
+            </IconCircle>
+            <div className={styles.connectivityText}>
+              <span className={styles.connectivityTitle}>Wi-Fi</span>
+              <span className={styles.connectivitySubtitle}>
+                Jiwon_Wi_Fi_adddd
+              </span>
+            </div>
+            <span className={styles.connectivityArrow}>
+              <IconRightArrow />
+            </span>
+          </div>
+
+          <div className={styles.connectivityRow}>
+            <IconCircle variant="blue">
+              <IconBluetooth />
+            </IconCircle>
+            <div className={styles.connectivityText}>
+              <span className={styles.connectivityTitle}>Bluetooth</span>
+              <span className={styles.connectivitySubtitle}>On</span>
+            </div>
+          </div>
+
+          <div className={styles.connectivityRow}>
+            <IconCircle variant="blue">
+              <IconAirDrop />
+            </IconCircle>
+            <div className={styles.connectivityText}>
+              <span className={styles.connectivityTitle}>AirDrop</span>
+              <span className={styles.connectivitySubtitle}>Everyone</span>
+            </div>
           </div>
         </div>
 
-        {/* Bluetooth Tile */}
-        <div
-          className={cn(controlTile, {
-            [controlTileDisabled]: !bluetoothEnabled
-          })}
-          onClick={() => setBluetoothEnabled(!bluetoothEnabled)}
-        >
-          <div className={controlTileIcon}>🔵</div>
-          <div className={controlTileLabel}>Bluetooth</div>
-          <div className={controlTileSubtitle}>
-            {bluetoothEnabled ? "On" : "Off"}
+        <div className={styles.rightColumn}>
+          <div className={styles.focusTile}>
+            <IconCircle variant="neutral">
+              <IconFocus />
+            </IconCircle>
+            <span className={styles.focusLabel}>Focus</span>
           </div>
-        </div>
 
-        {/* AirDrop Tile */}
-        <div
-          className={cn(controlTile, {
-            [controlTileDisabled]: !airdropEnabled
-          })}
-          onClick={() => setAirdropEnabled(!airdropEnabled)}
-        >
-          <div className={controlTileIcon}>📡</div>
-          <div className={controlTileLabel}>AirDrop</div>
-          <div className={controlTileSubtitle}>
-            {airdropEnabled ? "Everyone" : "Off"}
+          <div className={styles.squareTileRow}>
+            <div className={styles.squareTile}>
+              <div className={styles.squareTileIcon}>
+                <IconStageManager />
+              </div>
+              <span className={styles.squareTileLabel}>
+                Stage
+                <br />
+                Manager
+              </span>
+            </div>
+            <div className={styles.squareTile}>
+              <div className={styles.squareTileIcon}>
+                <IconScreenMirroring />
+              </div>
+              <span className={styles.squareTileLabel}>
+                Screen
+                <br />
+                Mirroring
+              </span>
+            </div>
           </div>
-        </div>
-
-        {/* Focus Mode - Wide Tile */}
-        <div
-          className={cn(controlTile, controlTileWide, {
-            [controlTileDisabled]: !focusMode
-          })}
-          onClick={() => setFocusMode(!focusMode)}
-        >
-          <div className={controlTileIcon}>🌙</div>
-          <div className={controlTileLabel}>Focus</div>
-          <div className={controlTileSubtitle}>
-            {focusMode ? "Do Not Disturb" : "Off"}
-          </div>
-        </div>
-
-        {/* Screen Mirroring Tile */}
-        <div className={cn(controlTile, controlTileDisabled)}>
-          <div className={controlTileIcon}>📺</div>
-          <div className={controlTileLabel}>Screen Mirroring</div>
-        </div>
-
-        {/* Stage Manager Tile */}
-        <div className={cn(controlTile, controlTileDisabled)}>
-          <div className={controlTileIcon}>📱</div>
-          <div className={controlTileLabel}>Stage Manager</div>
         </div>
       </div>
 
-      {/* Sliders Section */}
-      <div className={slidersContainer}>
+      <div className={styles.sliderTile}>
+        <span className={styles.sliderTileLabel}>Display</span>
         <ControlSlider
           icon={<IconBrightness />}
           value={brightness}
           onChange={setBrightness}
         />
-
-        <ControlSlider
-          icon={<IconSound />}
-          value={volume}
-          onChange={setVolume}
-        />
       </div>
 
-      {/* Media Control */}
+      <div className={styles.sliderTile}>
+        <span className={styles.sliderTileLabel}>Sound</span>
+        <div className={styles.sliderWithAccessory}>
+          <div className={styles.sliderFlexWrapper}>
+            <ControlSlider
+              icon={<IconSound />}
+              value={volume}
+              onChange={setVolume}
+            />
+          </div>
+          <button type="button" className={styles.sliderAccessoryButton}>
+            <IconAirPlay />
+          </button>
+        </div>
+      </div>
+
       <MediaControl />
     </div>
   );

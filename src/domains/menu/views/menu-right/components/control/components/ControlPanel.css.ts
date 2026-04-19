@@ -6,133 +6,209 @@ import { controlPanel, innerControlPanel } from "../../styles/panel.css";
 export const panel = style([
   controlPanel,
   {
-    padding: 8,
-    gap: 8
+    boxSizing: "border-box",
+    width: 298,
+    padding: 10,
+    gap: 10,
+    borderRadius: 20
   }
 ]);
 
-export const controlsGrid = style({
-  display: "grid",
-  gridTemplateColumns: "repeat(3, 1fr)",
-  gridTemplateRows: "repeat(2, 1fr)",
-  gap: 8
+export const topRow = style({
+  display: "flex",
+  gap: 10,
+  height: 134,
+  width: "100%"
 });
 
-export const controlTile = style({
-  width: 68,
-  height: 68,
-  borderRadius: 10,
+export const connectivityTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: 1,
+    minWidth: 0,
+    padding: 10,
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    justifyContent: "center",
+    overflow: "hidden"
+  }
+]);
+
+export const connectivityRow = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  width: "100%"
+});
+
+export const connectivityText = style({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: 4,
-  backgroundColor: COLORS.fill.secondary,
-  cursor: "pointer",
-  transition: "all 150ms ease",
-  position: "relative",
+  gap: 1,
+  flex: 1,
+  minWidth: 0
+});
 
-  ":hover": {
-    opacity: 0.8
-  },
-
-  ":active": {
-    transform: "scale(0.95)"
+export const connectivityTitle = style([
+  FONT.bold_11,
+  {
+    color: COLORS.text.primary,
+    letterSpacing: 0.22
   }
-});
+]);
 
-export const controlTileDisabled = style({
-  backgroundColor: COLORS.fill.quaternary,
-  cursor: "default",
-
-  ":hover": {
-    opacity: 1
-  },
-
-  ":active": {
-    transform: "none"
-  }
-});
-
-export const controlTileWide = style({
-  gridColumn: "span 2",
-  width: "auto"
-});
-
-export const controlTileTall = style({
-  gridRow: "span 2",
-  height: "auto"
-});
-
-export const controlTileIcon = style({
-  fontSize: 20,
-  lineHeight: 1,
-  color: COLORS.text.primary
-});
-
-export const controlTileLabel = style([
+export const connectivitySubtitle = style([
   FONT.medium_11,
   {
+    color: COLORS.text.secondary,
+    fontSize: 10,
+    lineHeight: "11px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  }
+]);
+
+export const connectivityArrow = style({
+  color: COLORS.text.secondary,
+  display: "flex",
+  alignItems: "center",
+  flexShrink: 0
+});
+
+export const rightColumn = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+  flex: 1,
+  minWidth: 0,
+  height: "100%"
+});
+
+export const focusTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: 1,
+    minHeight: 0,
+    padding: "8px 10px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    overflow: "hidden"
+  }
+]);
+
+export const focusLabel = style([
+  FONT.bold_11,
+  {
+    color: COLORS.text.primary,
+    letterSpacing: 0.22,
+    flex: 1,
+    minWidth: 0,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  }
+]);
+
+export const squareTileRow = style({
+  display: "flex",
+  gap: 10,
+  flex: 1,
+  minHeight: 0,
+  width: "100%"
+});
+
+export const squareTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: 1,
+    minWidth: 0,
+    height: "100%",
+    padding: 4,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 2,
+    overflow: "hidden"
+  }
+]);
+
+export const squareTileIcon = style({
+  width: 26,
+  height: 26,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: COLORS.text.primary,
+  flexShrink: 0
+});
+
+export const squareTileLabel = style([
+  FONT.medium_11,
+  {
+    fontSize: 10,
+    lineHeight: "11px",
     color: COLORS.text.primary,
     textAlign: "center"
   }
 ]);
 
-export const controlTileSubtitle = style([
-  FONT.medium_11,
-  {
-    color: COLORS.text.secondary,
-    fontSize: 10,
-    textAlign: "center"
-  }
-]);
-
-export const focusSection = style([
+export const sliderTile = style([
   innerControlPanel,
   {
-    padding: 8,
+    boxSizing: "border-box",
+    width: "100%",
+    padding: "7px 10px 10px 10px",
     display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8
+    flexDirection: "column",
+    gap: 5,
+    overflow: "hidden"
   }
 ]);
 
-export const focusLabel = style([
-  FONT.medium_11,
+export const sliderTileLabel = style([
+  FONT.bold_11,
   {
-    color: COLORS.text.primary
+    color: COLORS.text.primary,
+    letterSpacing: 0.22
   }
 ]);
 
-export const slidersContainer = style({
+export const sliderWithAccessory = style({
   display: "flex",
-  flexDirection: "column",
+  alignItems: "center",
   gap: 8,
-  padding: "0 8px"
+  width: "100%"
 });
 
-// Dark mode styles
-darkModeStyle(controlTile, {
-  backgroundColor: "rgba(255, 255, 255, 0.08)"
+export const sliderFlexWrapper = style({
+  flex: 1,
+  minWidth: 0,
+  display: "flex"
 });
 
-darkModeStyle(controlTileDisabled, {
-  backgroundColor: "rgba(255, 255, 255, 0.03)"
+export const sliderAccessoryButton = style({
+  width: 26,
+  height: 26,
+  borderRadius: "50%",
+  backgroundColor: COLORS.fill.primary,
+  color: COLORS.text.primary,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexShrink: 0,
+  border: "none",
+  cursor: "pointer",
+  padding: 0
 });
 
-darkModeStyle(controlTileIcon, {
-  color: COLORS.text.primary
-});
-
-darkModeStyle(controlTileLabel, {
-  color: COLORS.text.primary
-});
-
-darkModeStyle(controlTileSubtitle, {
-  color: COLORS.text.secondary
-});
-
-darkModeStyle(focusLabel, {
+darkModeStyle(squareTileIcon, {
   color: COLORS.text.primary
 });
