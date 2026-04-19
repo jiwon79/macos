@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Control } from "./components/control/Control";
+import { FocusSetting } from "./components/focus-setting/FocusSetting";
 import { WifiSetting } from "./components/wifi-setting/WifiSetting";
 import { container } from "./MenuRight.css";
 
@@ -35,6 +36,10 @@ export function MenuRight() {
       <WifiSetting
         selected={selectedItem === "wifi"}
         onSelectedChange={(selected) => onSelectedChange(selected, "wifi")}
+      />
+      <FocusSetting
+        selected={selectedItem === "focus"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "focus")}
       />
       <Control
         selected={selectedItem === "control-center"}
