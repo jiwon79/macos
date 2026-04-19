@@ -5,12 +5,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ```bash
-# Start development server
-yarn dev
-
-# Production build
-yarn build
-
 # Lint check
 yarn lint
 
@@ -23,6 +17,15 @@ yarn test
 # Type check
 yarn typecheck
 ```
+
+## Test
+To run tests, use the following command:
+
+```bash
+yarn test
+```
+
+If you want to test UI components, access localhost:5173 in your browser and test the application manually.
 
 ## Architecture Overview
 
