@@ -72,7 +72,8 @@ export const collapseList = style({
   width: "100%",
   padding: "4px 0",
   display: "flex",
-  flexDirection: "column"
+  flexDirection: "column",
+  backgroundColor: "rgba(0, 0, 0, 0.07)"
 });
 
 export const body = style({

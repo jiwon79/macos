@@ -7,7 +7,7 @@ export const container = style({
   height: 22,
   display: "flex",
   alignItems: "center",
-  padding: "0 9px"
+  width: "100%"
 });
 
 export const inner = recipe({
@@ -15,7 +15,7 @@ export const inner = recipe({
     display: "flex",
     alignItems: "center",
     width: "100%",
-    padding: "3px 9px",
+    padding: "3px 9px 3px 11px",
     borderRadius: 4,
     cursor: "pointer",
     userSelect: "none"
