@@ -55,7 +55,24 @@ export const headerArrow = style({
   alignItems: "center",
   justifyContent: "center",
   color: COLORS.text.secondary,
-  flexShrink: 0
+  flexShrink: 0,
+  border: "none",
+  background: "none",
+  padding: 0,
+  cursor: "pointer",
+  transition: "transform 120ms ease"
+});
+
+export const headerArrowExpanded = style({
+  transform: "rotate(90deg)"
+});
+
+export const collapseList = style({
+  boxSizing: "border-box",
+  width: "100%",
+  padding: "4px 0",
+  display: "flex",
+  flexDirection: "column"
 });
 
 export const body = style({

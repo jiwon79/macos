@@ -1,4 +1,6 @@
+import { IconCheck } from "assets/icons";
 import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import { cn } from "third-parties/classnames";
 import * as styles from "./SettingTextDepthItem.css";
 
 interface SettingTextDepthItemProps {
@@ -20,7 +22,7 @@ export function SettingTextDepthItem({
   };
 
   return (
-    <div className={styles.container()}>
+    <div className={styles.container}>
       <div
         className={styles.inner({ selected })}
         onClick={onClick}
@@ -28,7 +30,14 @@ export function SettingTextDepthItem({
         role={onClick ? "button" : undefined}
         tabIndex={onClick ? 0 : undefined}
       >
-        <span className={styles.text()}>{children}</span>
+        <span
+          className={cn(styles.iconSlot, {
+            [styles.iconSlotHidden]: !selected
+          })}
+        >
+          <IconCheck />
+        </span>
+        <span className={styles.text}>{children}</span>
       </div>
     </div>
   );

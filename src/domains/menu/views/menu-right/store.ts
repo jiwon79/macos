@@ -30,6 +30,7 @@ export interface MenuRightState {
     darkMode: boolean;
     nightShift: boolean;
     trueTone: boolean;
+    colorProfile: string;
   };
   battery: {
     level: number;
@@ -50,6 +51,7 @@ export interface MenuRightAction {
   toggleDarkMode: () => void;
   toggleNightShift: () => void;
   toggleTrueTone: () => void;
+  setDisplayColorProfile: (profile: string) => void;
 }
 
 export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
@@ -78,7 +80,8 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       brightness: 75,
       darkMode: false,
       nightShift: false,
-      trueTone: true
+      trueTone: true,
+      colorProfile: "Apple XDR Display (P3-1600 nits)"
     },
     battery: {
       level: 71
@@ -118,6 +121,10 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       toggleTrueTone: () =>
         set((state) => ({
           display: { ...state.display, trueTone: !state.display.trueTone }
+        })),
+      setDisplayColorProfile: (profile) =>
+        set((state) => ({
+          display: { ...state.display, colorProfile: profile }
         }))
     }
   })

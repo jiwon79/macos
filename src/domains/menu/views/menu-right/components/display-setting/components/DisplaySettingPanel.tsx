@@ -5,12 +5,28 @@ import {
   IconDisplayTrueTone,
   IconRightArrow
 } from "assets/icons";
+import { useState } from "react";
 import { cn } from "third-parties/classnames";
 import { useMenuRightActions, useMenuRightStore } from "../../../store";
 import { ControlSlider } from "../../control/components/ControlSlider";
 import { SettingDivider } from "../../setting/SettingDivider";
+import { SettingTextDepthItem } from "../../setting/SettingTextDepthItem";
 import { SettingTextItem } from "../../setting/SettingTextItem";
 import * as styles from "./DisplaySettingPanel.css";
+
+const COLOR_PROFILES = [
+  "Apple XDR Display (P3-1600 nits)",
+  "Apple Display (P3-600 nits)",
+  "HDR Video (P3-ST 2084)",
+  "HDTV Video (BT.709-BT.1886)",
+  "NTSC Video (BT.601 SMPTE-C)",
+  "PAL & SECAM Video (BT.601 EBU)",
+  "Digital Cinema (P3-DCI)",
+  "Digital Cinema (P3-D65)",
+  "Design & Print (P3-D50)",
+  "Photography (P3-D65)",
+  "Internet & Web (sRGB)"
+];
 
 interface ModeTileProps {
   icon: React.ReactNode;
@@ -36,29 +52,49 @@ function ModeTile({ icon, label, active, onClick }: ModeTileProps) {
 }
 
 export function DisplaySettingPanel() {
-  const { brightness, darkMode, nightShift, trueTone } = useMenuRightStore(
-    (state) => state.display
-  );
+  const { brightness, darkMode, nightShift, trueTone, colorProfile } =
+    useMenuRightStore((state) => state.display);
   const {
     setDisplayBrightness,
     toggleDarkMode,
     toggleNightShift,
-    toggleTrueTone
+    toggleTrueTone,
+    setDisplayColorProfile
   } = useMenuRightActions();
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <div className={styles.headerTextGroup}>
           <span className={styles.headerTitle}>Display</span>
-          <span className={styles.headerSubtitle}>
-            Apple XDR Display (P3-1600 nits)
-          </span>
+          <span className={styles.headerSubtitle}>{colorProfile}</span>
         </div>
-        <span className={styles.headerArrow}>
+        <button
+          type="button"
+          className={cn(styles.headerArrow, {
+            [styles.headerArrowExpanded]: expanded
+          })}
+          onClick={() => setExpanded((prev) => !prev)}
+          aria-label={expanded ? "Collapse profiles" : "Expand profiles"}
+          aria-expanded={expanded}
+        >
           <IconRightArrow />
-        </span>
+        </button>
       </div>
+      {expanded && (
+        <div className={styles.collapseList}>
+          {COLOR_PROFILES.map((profile) => (
+            <SettingTextDepthItem
+              key={profile}
+              selected={colorProfile === profile}
+              onClick={() => setDisplayColorProfile(profile)}
+            >
+              {profile}
+            </SettingTextDepthItem>
+          ))}
+        </div>
+      )}
       <div className={styles.body}>
         <div className={styles.sliderRow}>
           <ControlSlider
