@@ -2,6 +2,7 @@ import { create } from "third-parties/zustand";
 
 export type FocusMode = "do_not_disturb" | "work" | "sleep" | null;
 export type FocusDuration = "1_hour" | "until_morning" | null;
+export type AirDropMode = "off" | "contacts_only" | "everyone";
 
 export interface MenuRightState {
   wifi: {
@@ -12,6 +13,27 @@ export interface MenuRightState {
     mode: FocusMode;
     duration: FocusDuration;
   };
+  airdrop: {
+    mode: AirDropMode;
+  };
+  bluetooth: {
+    enabled: boolean;
+    connectedDevices: string[];
+  };
+  sound: {
+    volume: number;
+    muted: boolean;
+    output: string;
+  };
+  display: {
+    brightness: number;
+    darkMode: boolean;
+    nightShift: boolean;
+    trueTone: boolean;
+  };
+  battery: {
+    level: number;
+  };
 }
 
 export interface MenuRightAction {
@@ -19,6 +41,15 @@ export interface MenuRightAction {
   setWifiSSID: (ssid: string | null) => void;
   setFocusMode: (mode: FocusMode) => void;
   setFocusDuration: (duration: FocusDuration) => void;
+  setAirDropMode: (mode: AirDropMode) => void;
+  setBluetoothEnabled: (enabled: boolean) => void;
+  setSoundVolume: (volume: number) => void;
+  setSoundMuted: (muted: boolean) => void;
+  setSoundOutput: (output: string) => void;
+  setDisplayBrightness: (brightness: number) => void;
+  toggleDarkMode: () => void;
+  toggleNightShift: () => void;
+  toggleTrueTone: () => void;
 }
 
 export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
@@ -31,6 +62,27 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       mode: null,
       duration: null
     },
+    airdrop: {
+      mode: "everyone"
+    },
+    bluetooth: {
+      enabled: true,
+      connectedDevices: ["Speaker", "Jiwon's Magic Keyboard"]
+    },
+    sound: {
+      volume: 50,
+      muted: false,
+      output: "MacBook Pro Speakers"
+    },
+    display: {
+      brightness: 75,
+      darkMode: false,
+      nightShift: false,
+      trueTone: true
+    },
+    battery: {
+      level: 71
+    },
     actions: {
       setWifiEnabled: (enabled) =>
         set((state) => ({ wifi: { ...state.wifi, enabled } })),
@@ -39,7 +91,34 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       setFocusMode: (mode) =>
         set((state) => ({ focus: { ...state.focus, mode } })),
       setFocusDuration: (duration) =>
-        set((state) => ({ focus: { ...state.focus, duration } }))
+        set((state) => ({ focus: { ...state.focus, duration } })),
+      setAirDropMode: (mode) =>
+        set((state) => ({ airdrop: { ...state.airdrop, mode } })),
+      setBluetoothEnabled: (enabled) =>
+        set((state) => ({ bluetooth: { ...state.bluetooth, enabled } })),
+      setSoundVolume: (volume) =>
+        set((state) => ({ sound: { ...state.sound, volume } })),
+      setSoundMuted: (muted) =>
+        set((state) => ({ sound: { ...state.sound, muted } })),
+      setSoundOutput: (output) =>
+        set((state) => ({ sound: { ...state.sound, output } })),
+      setDisplayBrightness: (brightness) =>
+        set((state) => ({ display: { ...state.display, brightness } })),
+      toggleDarkMode: () =>
+        set((state) => ({
+          display: { ...state.display, darkMode: !state.display.darkMode }
+        })),
+      toggleNightShift: () =>
+        set((state) => ({
+          display: {
+            ...state.display,
+            nightShift: !state.display.nightShift
+          }
+        })),
+      toggleTrueTone: () =>
+        set((state) => ({
+          display: { ...state.display, trueTone: !state.display.trueTone }
+        }))
     }
   })
 );

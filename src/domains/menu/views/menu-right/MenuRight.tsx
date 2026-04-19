@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { AirDropSetting } from "./components/airdrop-setting/AirDropSetting";
+import { BatterySetting } from "./components/battery-setting/BatterySetting";
+import { BluetoothSetting } from "./components/bluetooth-setting/BluetoothSetting";
 import { Control } from "./components/control/Control";
+import { DisplaySetting } from "./components/display-setting/DisplaySetting";
 import { FocusSetting } from "./components/focus-setting/FocusSetting";
+import { SoundSetting } from "./components/sound-setting/SoundSetting";
 import { WifiSetting } from "./components/wifi-setting/WifiSetting";
 import { container } from "./MenuRight.css";
 
@@ -10,14 +15,12 @@ export function MenuRight() {
 
   const onSelectedChange = (selected: boolean, name: string) => {
     if (selected) {
-      // Close other menu if open
       setSelectedItem(name);
     } else {
       setSelectedItem(null);
     }
   };
 
-  // Handle click outside to close menus
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -33,9 +36,29 @@ export function MenuRight() {
 
   return (
     <div ref={menuRef} className={container}>
+      <BatterySetting
+        selected={selectedItem === "battery"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "battery")}
+      />
+      <BluetoothSetting
+        selected={selectedItem === "bluetooth"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "bluetooth")}
+      />
+      <AirDropSetting
+        selected={selectedItem === "airdrop"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "airdrop")}
+      />
       <WifiSetting
         selected={selectedItem === "wifi"}
         onSelectedChange={(selected) => onSelectedChange(selected, "wifi")}
+      />
+      <DisplaySetting
+        selected={selectedItem === "display"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "display")}
+      />
+      <SoundSetting
+        selected={selectedItem === "sound"}
+        onSelectedChange={(selected) => onSelectedChange(selected, "sound")}
       />
       <FocusSetting
         selected={selectedItem === "focus"}
