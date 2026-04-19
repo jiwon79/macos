@@ -4,8 +4,6 @@ type FloatingMenuContext = {
   focused: boolean;
   selected: boolean;
   onSelectedChange: (selected: boolean) => void;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   refs: {
     setReference: (element: HTMLElement | null) => void;
     setFloating: (element: HTMLElement | null) => void;

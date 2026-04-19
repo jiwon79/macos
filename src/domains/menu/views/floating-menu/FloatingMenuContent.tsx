@@ -10,9 +10,9 @@ export function FloatingMenuContent({
   style,
   ...rest
 }: FloatingMenuContentProps) {
-  const { floating, refs, selected, open } = useFloatingMenuContext();
+  const { floating, refs, selected } = useFloatingMenuContext();
 
-  if (!selected && !open) {
+  if (!selected) {
     return null;
   }
 

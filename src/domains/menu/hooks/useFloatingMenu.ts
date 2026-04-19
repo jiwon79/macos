@@ -7,13 +7,21 @@ import {
   useHover,
   useInteractions
 } from "@floating-ui/react";
-import { useCallback, useState } from "react";
 
-export function useFloatingMenu({ focused }: { focused: boolean }) {
-  const [open, setOpen] = useState(false);
+interface UseFloatingMenuParams {
+  focused: boolean;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function useFloatingMenu({
+  focused,
+  open,
+  onOpenChange
+}: UseFloatingMenuParams) {
   const { refs, floatingStyles, context } = useFloating({
     open,
-    onOpenChange: setOpen,
+    onOpenChange,
     placement: "bottom-start",
     middleware: [offset({ mainAxis: 2 }), flip(), shift({ padding: 8 })]
   });
@@ -26,8 +34,6 @@ export function useFloatingMenu({ focused }: { focused: boolean }) {
     dismiss
   ]);
 
-  const onOpenChange = useCallback((open: boolean) => setOpen(open), []);
-
   return {
     refs,
     floating: {
@@ -36,8 +42,6 @@ export function useFloatingMenu({ focused }: { focused: boolean }) {
     },
     reference: {
       ...getReferenceProps()
-    },
-    open,
-    onOpenChange
+    }
   };
 }

@@ -17,15 +17,16 @@ export function FloatingMenu({
   onSelectedChange,
   children
 }: FloatingMenuProps) {
-  const { refs, floating, reference, open, onOpenChange } = useFloatingMenu({
-    focused
+  const { refs, floating, reference } = useFloatingMenu({
+    focused,
+    open: selected,
+    onOpenChange: onSelectedChange
   });
+
   const context = {
     focused,
     selected,
     onSelectedChange,
-    open,
-    onOpenChange,
     refs,
     floating,
     reference

@@ -13,15 +13,8 @@ export function FloatingMenuTrigger({
   children,
   ...rest
 }: FloatingMenuTriggerProps) {
-  const {
-    onSelectedChange,
-    refs,
-    open,
-    onOpenChange,
-    reference,
-    focused,
-    selected
-  } = useFloatingMenuContext();
+  const { onSelectedChange, refs, reference, focused, selected } =
+    useFloatingMenuContext();
 
   const { hovered, targetProps } = useHoverState();
 
@@ -37,7 +30,7 @@ export function FloatingMenuTrigger({
       type={type}
       selected={selected}
       onClick={(event) => {
-        onOpenChange(!open);
+        onSelectedChange(!selected);
         rest.onClick?.(event);
       }}
       {...reference}
@@ -49,7 +42,6 @@ export function FloatingMenuTrigger({
       onMouseLeave={(event) => {
         targetProps.onMouseLeave();
         reference.onMouseLeave?.(event);
-        rest.onMouseLeave?.(event);
         rest.onMouseLeave?.(event);
       }}
       onMouseMove={(event) => {

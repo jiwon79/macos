@@ -7,19 +7,13 @@ interface ControlProps {
 }
 
 export function Control({ selected, onSelectedChange }: ControlProps) {
-  const handleClick = () => {
-    onSelectedChange(!selected);
-  };
-
   return (
     <FloatingMenu
       focused={false}
       selected={selected}
       onSelectedChange={onSelectedChange}
     >
-      <FloatingMenu.Trigger type="icon" onClick={handleClick}>
-        ⚙️
-      </FloatingMenu.Trigger>
+      <FloatingMenu.Trigger type="icon">⚙️</FloatingMenu.Trigger>
       <FloatingMenu.Content>
         <ControlPanel />
       </FloatingMenu.Content>
