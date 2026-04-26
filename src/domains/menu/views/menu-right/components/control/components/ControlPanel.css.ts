@@ -9,10 +9,53 @@ export const panel = style([
     boxSizing: "border-box",
     width: 298,
     padding: 10,
-    gap: 10,
-    borderRadius: 20
+    borderRadius: 20,
+    overflow: "hidden"
   }
 ]);
+
+export const mainContent = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10
+});
+
+export const subViewWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 6
+});
+
+export const subViewBody = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 0,
+  padding: "4px 0 0 0"
+});
+
+export const sliderHeader = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  background: "none",
+  border: "none",
+  padding: 0,
+  cursor: "pointer",
+  color: "inherit",
+  fontFamily: "inherit",
+  width: "100%",
+  textAlign: "left"
+});
+
+export const sliderHeaderArrow = style({
+  width: 16,
+  height: 16,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: COLORS.text.secondary,
+  flexShrink: 0
+});
 
 export const topRow = style({
   display: "flex",
@@ -40,7 +83,15 @@ export const connectivityRow = style({
   display: "flex",
   alignItems: "center",
   gap: 8,
-  width: "100%"
+  width: "100%",
+  background: "none",
+  border: "none",
+  padding: 0,
+  margin: 0,
+  cursor: "pointer",
+  color: "inherit",
+  fontFamily: "inherit",
+  textAlign: "left"
 });
 
 export const connectivityText = style({
@@ -98,7 +149,13 @@ export const focusTile = style([
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    overflow: "hidden"
+    overflow: "hidden",
+    cursor: "pointer",
+    color: "inherit",
+    fontFamily: "inherit",
+    border: "none",
+    width: "100%",
+    textAlign: "left"
   }
 ]);
 
@@ -136,7 +193,11 @@ export const squareTile = style([
     alignItems: "center",
     justifyContent: "center",
     gap: 2,
-    overflow: "hidden"
+    overflow: "hidden",
+    cursor: "pointer",
+    color: "inherit",
+    fontFamily: "inherit",
+    border: "none"
   }
 ]);
 
