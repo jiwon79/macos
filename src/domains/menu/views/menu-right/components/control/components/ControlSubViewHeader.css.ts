@@ -4,26 +4,23 @@ import { COLORS, FONT } from "third-parties/vanilla-extract/styleToken.css";
 export const header = style({
   boxSizing: "border-box",
   width: "100%",
-  height: 36,
-  padding: "0 10px",
+  height: 32,
+  padding: "0 9px",
   display: "flex",
   alignItems: "center",
-  gap: 6,
+  gap: 4,
   background: "none",
   border: "none",
-  borderRadius: 8,
   cursor: "pointer",
   color: "inherit",
   fontFamily: "inherit",
-
-  ":hover": {
-    backgroundColor: COLORS.fill.tertiary
-  }
+  textAlign: "left",
+  userSelect: "none"
 });
 
 export const backIcon = style({
-  width: 18,
-  height: 18,
+  width: 14,
+  height: 14,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

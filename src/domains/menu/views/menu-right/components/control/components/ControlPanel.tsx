@@ -237,14 +237,18 @@ export function ControlPanel() {
   const [view, setView] = useState<View>("main");
 
   return (
-    <motion.div className={styles.panel} layout transition={transition}>
-      <AnimatePresence mode="wait" initial={false}>
+    <motion.div
+      className={styles.panel}
+      layout
+      transition={{ layout: { duration: 0.28, ease: [0.32, 0.72, 0, 1] } }}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
         {view === "main" ? (
           <motion.div
             key="main"
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -16 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={transition}
           >
             <MainView onNavigate={setView} />
@@ -253,9 +257,9 @@ export function ControlPanel() {
           <motion.div
             key={view}
             className={styles.subViewWrapper}
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 16 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={transition}
           >
             <ControlSubViewHeader

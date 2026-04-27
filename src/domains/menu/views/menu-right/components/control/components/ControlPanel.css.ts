@@ -22,15 +22,12 @@ export const mainContent = style({
 
 export const subViewWrapper = style({
   display: "flex",
-  flexDirection: "column",
-  gap: 6
+  flexDirection: "column"
 });
 
 export const subViewBody = style({
   display: "flex",
-  flexDirection: "column",
-  gap: 0,
-  padding: "4px 0 0 0"
+  flexDirection: "column"
 });
 
 export const sliderHeader = style({
