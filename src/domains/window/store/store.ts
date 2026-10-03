@@ -32,7 +32,8 @@ export const useWindowsStore = create<WindowsState, WindowsAction>((set) => ({
   windows: initialWindowStates,
   windowElements: {},
   minimizedWindows: [],
-  focusedWindowID: null,
+  focusedWindowID:
+    initialWindowStates[initialWindowStates.length - 1]?.id ?? null,
   isDraggingWindow: false,
   isResizingWindow: false,
   actions: {
@@ -76,7 +77,10 @@ export const useWindowsStore = create<WindowsState, WindowsAction>((set) => ({
         }
       };
 
-      set((state) => ({ windows: [...state.windows, window] }));
+      set((state) => ({
+        windows: [...state.windows, window],
+        focusedWindowID: window.id
+      }));
     },
     updateWindow: (id, data) => {
       set((state) => ({
@@ -86,30 +90,72 @@ export const useWindowsStore = create<WindowsState, WindowsAction>((set) => ({
       }));
     },
     deleteWindow: (id) =>
-      set((state) => ({
-        windows: state.windows.filter((window) => window.id !== id)
-      })),
+      set((state) => {
+        const windows = state.windows.filter((window) => window.id !== id);
+        return {
+          windows,
+          focusedWindowID:
+            state.focusedWindowID === id
+              ? getTopVisibleWindowID(windows, state.minimizedWindows)
+              : state.focusedWindowID
+        };
+      }),
     setWindowRef: (id, element) =>
       set((state) => ({
         windowElements: { ...state.windowElements, [id]: element }
       })),
     minimizeWindow: (window) =>
-      set((state) => ({
-        minimizedWindows: uniqBy(
+      set((state) => {
+        const minimizedWindows = uniqBy(
           [...state.minimizedWindows, window],
           (window) => window.id
-        )
-      })),
+        );
+        return {
+          minimizedWindows,
+          focusedWindowID:
+            state.focusedWindowID === window.id
+              ? getTopVisibleWindowID(state.windows, minimizedWindows)
+              : state.focusedWindowID
+        };
+      }),
     restoreMinimizedWindow: (id) =>
-      set((state) => ({
-        minimizedWindows: state.minimizedWindows.filter(
-          (minimizedWindow) => minimizedWindow.id !== id
-        )
-      })),
+      set((state) => {
+        const window = state.windows.find((window) => window.id === id);
+        if (
+          window == null ||
+          !state.minimizedWindows.some((window) => window.id === id)
+        ) {
+          return state;
+        }
+
+        return {
+          minimizedWindows: state.minimizedWindows.filter(
+            (minimizedWindow) => minimizedWindow.id !== id
+          ),
+          windows: [
+            ...state.windows.filter((window) => window.id !== id),
+            window
+          ],
+          focusedWindowID: id
+        };
+      }),
     setIsDraggingWindow: (isDragging) => set({ isDraggingWindow: isDragging }),
     setIsResizingWindow: (isResizing) => set({ isResizingWindow: isResizing })
   }
 }));
+
+function getTopVisibleWindowID(
+  windows: Window[],
+  minimizedWindows: MinimizedWindow[]
+): string | null {
+  for (let index = windows.length - 1; index >= 0; index--) {
+    const window = windows[index];
+    if (!minimizedWindows.some((minimized) => minimized.id === window.id)) {
+      return window.id;
+    }
+  }
+  return null;
+}
 
 export function useWindowsAction() {
   return useWindowsStore((state) => state.actions);
