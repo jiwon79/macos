@@ -4,7 +4,9 @@ import { useWindowsAction } from "domains/window/store";
 import { useEffect } from "react";
 import { cn } from "third-parties/classnames/cn.ts";
 import { colorProvider } from "third-parties/vanilla-extract/styleToken.css.ts";
+import { useDesktopImages } from "../hooks/useDesktopImages";
 import * as styles from "./Desktop.css.ts";
+import { DesktopLoadingScreen } from "./DesktopLoadingScreen";
 import { DesktopMenu } from "./DesktopMenu";
 import { Windows } from "./Windows";
 
@@ -17,6 +19,17 @@ export function Desktop() {
       darkMode ? "dark" : "light"
     );
   }, [darkMode]);
+  const { loading, failed, retry, continueToDesktop } = useDesktopImages();
+
+  if (loading || failed) {
+    return (
+      <DesktopLoadingScreen
+        failed={failed}
+        onRetry={retry}
+        onContinue={continueToDesktop}
+      />
+    );
+  }
 
   return (
     <div

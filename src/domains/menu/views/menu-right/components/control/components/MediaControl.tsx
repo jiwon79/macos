@@ -16,10 +16,10 @@ export function MediaControl() {
         <span className={appName}>Music.app</span>
       </div>
       <div className={mediaControls}>
-        <button type="button" className={controlButton}>
+        <button type="button" className={controlButton} aria-label="Play">
           <IconPlay />
         </button>
-        <button type="button" className={controlButton}>
+        <button type="button" className={controlButton} aria-label="Next track">
           <IconPlayNext />
         </button>
       </div>

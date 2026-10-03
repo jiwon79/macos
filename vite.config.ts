@@ -1,21 +1,16 @@
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
-import { resolve } from "path";
+import { resolve } from "node:path";
 import svgr from "vite-plugin-svgr";
 import { defineConfig } from "vitest/config";
-import { codeInspectorPlugin } from "code-inspector-plugin";
 
 export default defineConfig({
   plugins: [
     react(),
     vanillaExtractPlugin(),
     svgr({
-      include: "**/*.svg"
+      include: "**/*.svg",
     }),
-    codeInspectorPlugin({
-      bundler: "vite",
-      editor: "zed"
-    })
   ],
   test: {
     globals: true,
@@ -23,12 +18,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      assets: resolve(__dirname, "src/assets/"),
-      domains: resolve(__dirname, "src/domains/"),
-      modules: resolve(__dirname, "src/modules/"),
-      utils: resolve(__dirname, "src/utils/"),
-      views: resolve(__dirname, "src/views/"),
-      "third-parties": resolve(__dirname, "src/third-parties/"),
-    }
-  }
+      assets: resolve(import.meta.dirname, "src/assets/"),
+      domains: resolve(import.meta.dirname, "src/domains/"),
+      modules: resolve(import.meta.dirname, "src/modules/"),
+      utils: resolve(import.meta.dirname, "src/utils/"),
+      views: resolve(import.meta.dirname, "src/views/"),
+      "third-parties": resolve(import.meta.dirname, "src/third-parties/"),
+    },
+  },
 });

@@ -1,5 +1,5 @@
 import type { WindowStyle } from "domains/window/interface";
-import { useWindowsAction } from "domains/window/store";
+import { useWindowsAction, useWindowsStore } from "domains/window/store";
 import { forwardRef, useMemo } from "react";
 import { WindowContext } from "../WindowContext.ts";
 import { WindowResize } from "../WindowResize";
@@ -13,11 +13,12 @@ export interface WindowRendererProps {
   children: React.ReactNode;
 }
 
-function _WindowRenderer(
+function WindowRendererComponent(
   { id, style, onStyleChange, resizable = true, children }: WindowRendererProps,
   ref: React.Ref<HTMLDivElement>
 ) {
   const { setFocusedWindowID } = useWindowsAction();
+  const focused = useWindowsStore((state) => state.focusedWindowID === id);
 
   const context = useMemo(
     () => ({
@@ -34,6 +35,7 @@ function _WindowRenderer(
       <div
         id={id}
         data-app-window={id}
+        data-window-focused={focused}
         ref={ref}
         style={{
           width: `${width}px`,
@@ -53,4 +55,4 @@ function _WindowRenderer(
   );
 }
 
-export const WindowRenderer = forwardRef(_WindowRenderer);
+export const WindowRenderer = forwardRef(WindowRendererComponent);

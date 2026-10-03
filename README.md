@@ -1,30 +1,36 @@
 # macOS Web React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser desktop built with React, TypeScript, Vanilla Extract, Zustand, and Motion. Includes draggable and resizable windows, Dock minimize/restore animations, menus, and a working calculator.
 
-Currently, two official plugins are available:
+## Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Use Node.js 22.22.2 (`nvm use`) and Yarn 1.22.22. The supported Node ranges are recorded in `package.json`; newer Node 24 installations need version 24.15.0 or later for jsdom.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```sh
+nvm use
+corepack enable
+yarn install --frozen-lockfile
+yarn dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Checks
+
+```sh
+yarn lint
+yarn typecheck
+yarn test:run
+yarn build
+yarn preview
+```
+
+`yarn test` starts Vitest in watch mode. `yarn build` checks the application and Vite configuration types before creating `dist/`.
+
+## Desktop images
+
+Wallpapers and Dock icons use imported asset URLs, so Vite resolves their production filenames and deployment base path. The desktop waits for both wallpaper themes and all three Dock icons. Failed or stalled requests show **Try again** and **Continue**, allowing access even when an image is unavailable. Both themes have a solid background fallback.
+
+## Dependency updates
+
+Build and test tools use Vite 8, Vitest 5, Biome 2, and jsdom 30. Runtime libraries include Zustand 5 and Motion 14. React remains on 18.3 and TypeScript on 5.9 to keep their existing application and compiler contracts; their next major migrations are separate work.
+
+Update `package.json` and `yarn.lock` together, then run the checks above and verify both themes, menus, calculator input, window dragging/resizing, and Dock minimize/restore in the browser. Run `yarn audit` to check the resolved dependency tree.
