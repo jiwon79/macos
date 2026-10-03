@@ -81,7 +81,7 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       brightness: 75,
       darkMode:
         typeof window !== "undefined" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches,
+        (window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false),
       nightShift: false,
       trueTone: true,
       colorProfile: "Apple XDR Display (P3-1600 nits)"

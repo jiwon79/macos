@@ -3,6 +3,10 @@ export interface Window {
   appID: string;
   content: React.ReactNode;
   style: WindowStyle;
+  /** Original bounds while the title-bar zoom is active. */
+  restoreStyle?: WindowStyle;
+  /** Bounds to restore on leaving full screen; independent of title-bar zoom. */
+  fullscreenRestoreStyle?: WindowStyle;
 }
 
 export interface WindowStyle {

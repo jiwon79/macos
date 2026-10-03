@@ -8,6 +8,17 @@ export const container = style({
   bottom: 5,
   left: "50%",
   transformOrigin: "bottom center",
+  translate: "-50% 0",
+  transition: "translate 350ms ease, opacity 250ms ease, visibility 350ms",
+  selectors: {
+    '&[data-dock-hidden="true"]': {
+      translate: "-50% 90px",
+      opacity: 0,
+      visibility: "hidden",
+      pointerEvents: "none"
+    }
+  },
+  "@media": { "(prefers-reduced-motion: reduce)": { transition: "none" } },
 
   display: "flex",
   alignItems: "end",

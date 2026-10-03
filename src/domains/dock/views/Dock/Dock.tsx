@@ -16,7 +16,7 @@ import { WindowDockItem } from "../DockItem/WindowDockItem";
 import { DockSeparator } from "../DockSeparator";
 import * as styles from "./Dock.css";
 
-export function Dock() {
+export function Dock({ hidden = false }: { hidden?: boolean }) {
   const dockRef = useRef<HTMLDivElement>(null);
   const viewport = useViewportSize();
   const [dockWidth, setDockWidth] = useState(0);
@@ -89,11 +89,13 @@ export function Dock() {
       return;
     }
 
-    const windowStyle = fitWindowToViewport(
-      windows.find((window) => window.id === windowId)?.style ??
-        minimizedWindow.window,
-      getViewportSize()
-    );
+    const restoredWindow = windows.find((window) => window.id === windowId);
+    const windowStyle = restoredWindow?.restoreStyle
+      ? restoredWindow.style
+      : fitWindowToViewport(
+          restoredWindow?.style ?? minimizedWindow.window,
+          getViewportSize()
+        );
     startRestoringWindow({ ...minimizedWindow, window: windowStyle });
 
     await animateGenieEffect({
@@ -120,7 +122,9 @@ export function Dock() {
       ref={dockRef}
       data-dock
       className={styles.container}
-      style={{ transform: `translateX(-50%) scale(${scale})` }}
+      style={{ scale }}
+      data-dock-hidden={hidden}
+      aria-hidden={hidden || undefined}
       onMouseMove={(event) => allowHover && setMouseX(event.clientX)}
       onMouseLeave={() => allowHover && setMouseX(null)}
     >

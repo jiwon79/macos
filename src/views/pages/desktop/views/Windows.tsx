@@ -4,9 +4,16 @@ import { useWindowsAction, useWindowsStore } from "domains/window/store";
 import { WindowRenderer } from "domains/window/views/WindowRenderer/WindowRenderer";
 import { useViewportSize } from "utils/react/useViewportSize";
 
-export function Windows() {
+export function Windows({
+  fullscreenChromeVisible = false
+}: {
+  fullscreenChromeVisible?: boolean;
+}) {
   const windows = useWindowsStore((state) => state.windows);
   const minimizedWindows = useWindowsStore((state) => state.minimizedWindows);
+  const fullscreenWindow = windows.find(
+    (window) => window.fullscreenRestoreStyle
+  );
   const { updateWindow, setWindowRef } = useWindowsAction();
   const viewport = useViewportSize();
 
@@ -23,7 +30,10 @@ export function Windows() {
         const app = applications[window.appID];
         const resizable = app?.resizable ?? true;
         // Preserve the preferred geometry when the viewport temporarily shrinks.
-        const visibleStyle = fitWindowToViewport(window.style, viewport);
+        const visibleStyle =
+          window.restoreStyle || window.fullscreenRestoreStyle
+            ? window.style
+            : fitWindowToViewport(window.style, viewport);
 
         return (
           <WindowRenderer
@@ -36,6 +46,12 @@ export function Windows() {
             id={window.id}
             style={visibleStyle}
             resizable={resizable}
+            maximized={window.restoreStyle != null}
+            fullscreen={window.fullscreenRestoreStyle != null}
+            fullscreenChromeVisible={fullscreenChromeVisible}
+            hidden={
+              fullscreenWindow != null && fullscreenWindow.id !== window.id
+            }
             onStyleChange={(style) => {
               updateWindow(window.id, { style });
             }}
