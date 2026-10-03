@@ -5,6 +5,11 @@ interface WindowContextProps {
   id: string;
   style: WindowStyle;
   onStyleChange: (style: Partial<WindowStyle>) => void;
+  resizable: boolean;
+  maximized: boolean;
+  fullscreen: boolean;
+  fullscreenChromeVisible: boolean;
+  transitioning: boolean;
 }
 
 export const WindowContext = createContext<WindowContextProps>({
@@ -15,7 +20,12 @@ export const WindowContext = createContext<WindowContextProps>({
     width: 0,
     height: 0
   },
-  onStyleChange: () => {}
+  onStyleChange: () => {},
+  resizable: true,
+  maximized: false,
+  fullscreen: false,
+  fullscreenChromeVisible: false,
+  transitioning: false
 });
 
 export function useWindowContext() {

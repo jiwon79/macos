@@ -8,6 +8,7 @@ interface MovableContainerProps extends HTMLProps<HTMLDivElement> {
   onStartMove?: (event: MovableEventMap["startMove"]) => void;
   onEndMove?: (event: MovableEventMap["endMove"]) => void;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 export function MovableContainer({
@@ -15,6 +16,7 @@ export function MovableContainer({
   onStartMove,
   onEndMove,
   children,
+  disabled = false,
   ...restProps
 }: MovableContainerProps) {
   const movable = useRef<Movable>();
@@ -43,7 +45,11 @@ export function MovableContainer({
   return (
     <div
       ref={handlerRef}
-      onMouseDown={(event) => movable.current?.onMouseDown(event.nativeEvent)}
+      onMouseDown={(event) => {
+        if (!disabled) {
+          movable.current?.onMouseDown(event.nativeEvent);
+        }
+      }}
       {...restProps}
     >
       {children}

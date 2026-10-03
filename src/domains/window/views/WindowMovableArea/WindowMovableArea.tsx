@@ -16,8 +16,16 @@ export function WindowMovableArea({
   children,
   className
 }: WindowMovableAreaProps) {
-  const { style, onStyleChange } = useWindowContext();
-  const { setIsDraggingWindow } = useWindowsAction();
+  const {
+    id,
+    style,
+    onStyleChange,
+    maximized,
+    fullscreen,
+    fullscreenChromeVisible,
+    transitioning
+  } = useWindowContext();
+  const { setIsDraggingWindow, toggleMaximizeWindow } = useWindowsAction();
 
   const initialPositionRef = useRef<{ x: number; y: number }>();
   const initialMousePositionRef = useRef<{ x: number; y: number }>();
@@ -73,6 +81,23 @@ export function WindowMovableArea({
   return (
     <MovableContainer
       className={cn(container, className)}
+      data-window-titlebar="true"
+      data-fullscreen-chrome="titlebar"
+      data-titlebar-hidden={fullscreen && !fullscreenChromeVisible}
+      aria-hidden={fullscreen && !fullscreenChromeVisible ? true : undefined}
+      disabled={maximized || fullscreen || transitioning}
+      onDoubleClick={(event) => {
+        if (
+          fullscreen ||
+          (event.target as HTMLElement).closest(
+            "button, a, input, select, textarea, [contenteditable], [role='button']"
+          )
+        )
+          return;
+        event.preventDefault();
+        event.stopPropagation();
+        toggleMaximizeWindow(id);
+      }}
       onStartMove={onStartMove}
       onMove={onMove}
       onEndMove={onEndMove}

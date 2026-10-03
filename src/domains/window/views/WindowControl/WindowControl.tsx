@@ -24,10 +24,11 @@ interface WindowControlProps {
 }
 
 export function WindowControl({ size }: WindowControlProps) {
-  const { id } = useWindowContext();
+  const { id, resizable, fullscreen, transitioning } = useWindowContext();
   const windows = useWindowsStore((state) => state.windows);
   const windowElements = useWindowsStore((state) => state.windowElements);
-  const { deleteWindow, minimizeWindow } = useWindowsAction();
+  const { deleteWindow, minimizeWindow, toggleFullscreenWindow } =
+    useWindowsAction();
 
   const dockElement = useWindowAnimationStore((state) => state.dockElement);
   const minimizedDockIndicatorElement = useWindowAnimationStore(
@@ -62,7 +63,12 @@ export function WindowControl({ size }: WindowControlProps) {
 
   const onMinimizeMouseDown = async (event: React.MouseEvent) => {
     event.stopPropagation();
-    if (window == null || windowElement == null) {
+    if (
+      window == null ||
+      windowElement == null ||
+      fullscreen ||
+      transitioning
+    ) {
       return;
     }
 
@@ -76,6 +82,15 @@ export function WindowControl({ size }: WindowControlProps) {
       logging: false,
       useCORS: true
     });
+    const currentWindow = useWindowsStore
+      .getState()
+      .windows.find((window) => window.id === id);
+    if (
+      currentWindow?.style !== window.style ||
+      currentWindow.fullscreenRestoreStyle
+    ) {
+      return;
+    }
     const { width, height } = window.style;
     const image = getImageData(windowCanvas, width, height);
     if (image == null) {
@@ -112,7 +127,10 @@ export function WindowControl({ size }: WindowControlProps) {
   };
 
   return (
-    <div className={container({ size })}>
+    <div
+      className={container({ size })}
+      onDoubleClick={(event) => event.stopPropagation()}
+    >
       <button
         type="button"
         aria-label="Close window"
@@ -124,6 +142,7 @@ export function WindowControl({ size }: WindowControlProps) {
       <button
         type="button"
         aria-label="Minimize window"
+        disabled={fullscreen || transitioning}
         className={minimizeIcon}
         onMouseDown={onMinimizeMouseDown}
       >
@@ -131,11 +150,20 @@ export function WindowControl({ size }: WindowControlProps) {
       </button>
       <button
         type="button"
-        aria-label="Maximize window"
+        aria-label={fullscreen ? "Exit full screen" : "Enter full screen"}
+        aria-pressed={fullscreen}
+        disabled={!resizable}
         className={maximizeIcon}
         onMouseDown={onControlButtonMouseDown}
+        onClick={() => toggleFullscreenWindow(id)}
       >
-        <IconWindowMaximize />
+        {fullscreen ? (
+          <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden="true">
+            <path d="M0 3h3V0L0 3Zm8 2H5v3l3-3Z" fill="currentColor" />
+          </svg>
+        ) : (
+          <IconWindowMaximize />
+        )}
       </button>
     </div>
   );

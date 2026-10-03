@@ -2,9 +2,16 @@ import { applications } from "domains/app/applications";
 import { useWindowsAction, useWindowsStore } from "domains/window/store";
 import { WindowRenderer } from "domains/window/views/WindowRenderer/WindowRenderer";
 
-export function Windows() {
+export function Windows({
+  fullscreenChromeVisible = false
+}: {
+  fullscreenChromeVisible?: boolean;
+}) {
   const windows = useWindowsStore((state) => state.windows);
   const minimizedWindows = useWindowsStore((state) => state.minimizedWindows);
+  const fullscreenWindow = windows.find(
+    (window) => window.fullscreenRestoreStyle
+  );
   const { updateWindow, setWindowRef } = useWindowsAction();
 
   const notMinimizedWindows = windows.filter(
@@ -31,6 +38,12 @@ export function Windows() {
             id={window.id}
             style={window.style}
             resizable={resizable}
+            maximized={window.restoreStyle != null}
+            fullscreen={window.fullscreenRestoreStyle != null}
+            fullscreenChromeVisible={fullscreenChromeVisible}
+            hidden={
+              fullscreenWindow != null && fullscreenWindow.id !== window.id
+            }
             onStyleChange={(style) => {
               updateWindow(window.id, { style });
             }}
