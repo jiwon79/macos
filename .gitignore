@@ -15,6 +15,10 @@ dist-ssr
 .vite
 *.tsbuildinfo
 
+# Playwright MCP screenshots and console logs
+.playwright-mcp/
+.playwright-cli/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,3 +29,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local screenshots, recordings, and design references
+/references/

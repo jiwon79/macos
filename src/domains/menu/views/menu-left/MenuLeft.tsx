@@ -1,49 +1,29 @@
 import type { MenuConfig } from "domains/app/interface";
-import useFocusMenu from "domains/menu/hooks/useFocusMenu";
-import { useState } from "react";
+import { useMenuBar } from "../menu/MenuBarContext";
 import { MenuAppleLogo } from "./components";
 import { MenuItem } from "./components/menu-item";
-import { contianer } from "./MenuLeft.css";
+import { container } from "./MenuLeft.css";
 
-interface MenuLeftProps {
-  menus: MenuConfig[];
-}
-
-export function MenuLeft({ menus }: MenuLeftProps) {
-  const [selectedMenu, setSelectedMenu] = useState<string | null>(null);
-  const { focused, menuRef } = useFocusMenu({
-    onFocusChange: (focused) => !focused && setSelectedMenu(null)
-  });
-
-  const onSelectedChange = (selected: boolean, name: string) => {
-    if (selected) {
-      setSelectedMenu(name);
-    } else {
-      setSelectedMenu(null);
-    }
-  };
-
+export function MenuLeft({ menus }: { menus: MenuConfig[] }) {
+  const { activeMenu, selectMenu } = useMenuBar();
+  const appMenuFocused = activeMenu?.startsWith("app:") ?? false;
   return (
-    <div ref={menuRef} className={contianer}>
+    <div className={container} data-menu-leading>
       <MenuAppleLogo
-        focused={focused}
-        selected={selectedMenu === "Apple"}
-        onSelectedChange={(selected) => onSelectedChange(selected, "Apple")}
+        focused={appMenuFocused}
+        selected={activeMenu === "app:Apple"}
+        onSelectedChange={(open) => selectMenu("app:Apple", open)}
       />
-      {menus.map((menu, index) => {
-        return (
-          <MenuItem
-            type={index === 0 ? "text-bold" : "text"}
-            key={menu.name + index}
-            menu={menu}
-            focused={focused}
-            selected={menu.name === selectedMenu}
-            onSelectedChange={(selected) =>
-              onSelectedChange(selected, menu.name)
-            }
-          />
-        );
-      })}
+      {menus.map((menu, index) => (
+        <MenuItem
+          key={menu.name}
+          type={index === 0 ? "text-bold" : "text"}
+          menu={menu}
+          focused={appMenuFocused}
+          selected={activeMenu === `app:${menu.name}`}
+          onSelectedChange={(open) => selectMenu(`app:${menu.name}`, open)}
+        />
+      ))}
     </div>
   );
 }

@@ -24,7 +24,8 @@ interface WindowControlProps {
 }
 
 export function WindowControl({ size }: WindowControlProps) {
-  const { id, resizable, fullscreen, transitioning } = useWindowContext();
+  const { id, style, resizable, fullscreen, transitioning } =
+    useWindowContext();
   const windows = useWindowsStore((state) => state.windows);
   const windowElements = useWindowsStore((state) => state.windowElements);
   const { deleteWindow, minimizeWindow, toggleFullscreenWindow } =
@@ -91,7 +92,7 @@ export function WindowControl({ size }: WindowControlProps) {
     ) {
       return;
     }
-    const { width, height } = window.style;
+    const { width, height } = style;
     const image = getImageData(windowCanvas, width, height);
     if (image == null) {
       return;
@@ -101,20 +102,20 @@ export function WindowControl({ size }: WindowControlProps) {
       id,
       appID: window.appID,
       imageData: image,
-      window: window.style,
+      window: style,
       target
     });
     startMinimizingWindow({
       id,
       appID: window.appID,
       imageData: image,
-      window: window.style,
+      window: style,
       target
     });
 
     await animateGenieEffect({
       image,
-      window: window.style,
+      window: style,
       getTarget,
       reverse: false
     });

@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { darkModeStyle } from "third-parties/vanilla-extract";
 import { hexAlpha } from "utils/style";
 
@@ -10,7 +10,8 @@ export const container = style({
   flexDirection: "row",
   alignItems: "center",
 
-  width: "calc(100% - 12px)",
+  boxSizing: "border-box",
+  width: "100%",
   height: 24,
   padding: "0 8px 0 4px"
 });
@@ -23,7 +24,9 @@ export const menuContainer = style({
   alignItems: "center",
   justifyContent: "space-between",
 
-  width: "calc(100% - 12px)",
+  left: 4,
+  right: 8,
+  minWidth: 0,
   height: "100%"
 });
 
@@ -59,4 +62,16 @@ export const backgroundColorBurn = style([
 
 darkModeStyle(backgroundColorBurn, {
   background: hexAlpha("#FFFFFF", 0.2)
+});
+
+// Match macOS: keep status items on one line and reduce app menus in narrow windows.
+globalStyle("[data-menu-leading]", { minWidth: 0, flexShrink: 1 });
+globalStyle("[data-menu-leading] > button:nth-of-type(n+4)", {
+  "@media": { "(max-width: 900px)": { display: "none" } }
+});
+globalStyle("[data-menu-leading] > button:nth-of-type(n+3)", {
+  "@media": { "(max-width: 440px)": { display: "none" } }
+});
+globalStyle("[data-menu-leading] > button:nth-of-type(n+2)", {
+  "@media": { "(max-width: 400px)": { display: "none" } }
 });

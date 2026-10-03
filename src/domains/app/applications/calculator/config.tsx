@@ -124,7 +124,8 @@ export const calculatorConfig: AppConfig = {
       submenuGroups: [
         [
           {
-            name: "Basic(selected)",
+            name: "Basic",
+            checked: true,
             shortcut: "⌘1"
           },
           {
@@ -265,7 +266,8 @@ export const calculatorConfig: AppConfig = {
       submenuGroups: [
         [
           {
-            name: "Search(input)"
+            name: "Search",
+            disabled: true
           },
           {
             name: "Calculator Help"

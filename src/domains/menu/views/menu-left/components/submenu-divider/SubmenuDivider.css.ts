@@ -8,6 +8,7 @@ export const divider = style({
 
   width: "calc(100% - 18px)",
   height: "1px",
+  flexShrink: 0,
   margin: "5px 9px"
 });
 

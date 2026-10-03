@@ -1,29 +1,23 @@
-import { forwardRef } from "react";
+import { type ButtonHTMLAttributes, forwardRef } from "react";
 import { cn } from "third-parties/classnames";
 import { container } from "./MenuBase.css";
 
 export type MenuType = "icon" | "text" | "text-bold";
-
-export interface MenuBaseProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
+export interface MenuBaseProps
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
   type: MenuType;
-  className?: string;
   selected: boolean;
 }
 
-const _MenuBase = (
-  { children, type, className, selected, ...rest }: MenuBaseProps,
-  ref: React.Ref<HTMLDivElement>
-) => {
-  return (
-    <div
+export const MenuBase = forwardRef<HTMLButtonElement, MenuBaseProps>(
+  ({ children, type, className, selected, ...rest }, ref) => (
+    <button
       ref={ref}
+      type="button"
       className={cn(container({ selected, type }), className)}
       {...rest}
     >
       {children}
-    </div>
-  );
-};
-
-export const MenuBase = forwardRef(_MenuBase);
+    </button>
+  )
+);

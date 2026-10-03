@@ -1,0 +1,332 @@
+import { globalStyle, style } from "@vanilla-extract/css";
+import { darkModeStyle } from "third-parties/vanilla-extract";
+import { COLORS, FONT } from "third-parties/vanilla-extract/styleToken.css";
+import {
+  controlPanel,
+  innerControlPanel,
+  settingPanel
+} from "../../styles/panel.css";
+
+export const panel = style({
+  boxSizing: "border-box",
+  width: 298,
+  position: "relative"
+});
+
+export const detailPanel = style([
+  settingPanel,
+  {
+    boxSizing: "border-box",
+    position: "absolute",
+    overflow: "hidden",
+    opacity: "var(--control-view-opacity, 1)",
+    zIndex: 1
+  }
+]);
+
+export const mainContent = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10
+});
+
+const viewContent = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  boxSizing: "border-box"
+});
+
+export const mainView = style([
+  controlPanel,
+  viewContent,
+  {
+    height: 370,
+    padding: 10,
+    overflow: "hidden",
+    opacity: "var(--control-view-opacity, 1)"
+  }
+]);
+
+export const subViewWrapper = style([
+  viewContent,
+  {
+    width: 298,
+    padding: 5,
+    display: "flex",
+    flexDirection: "column",
+    opacity: "var(--control-view-opacity, 1)"
+  }
+]);
+
+export const subViewBody = style({
+  display: "flex",
+  flexDirection: "column"
+});
+
+export const morphingSlider = style({ position: "absolute", zIndex: 2 });
+
+for (const [view, label] of [
+  ["display", "Display brightness"],
+  ["sound", "Sound volume"]
+]) {
+  // Keep both layout slots measurable, but paint only the shared slider.
+  globalStyle(
+    `${panel}[data-shared-slider="${view}"] ${mainView} [data-control-slider="${label}"], ${panel}[data-shared-slider="${view}"] ${subViewWrapper} [data-control-slider="${label}"]`,
+    { visibility: "hidden" }
+  );
+}
+
+export const sliderHeader = style({
+  height: 14,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  background: "none",
+  border: "none",
+  padding: 0,
+  cursor: "pointer",
+  color: "inherit",
+  fontFamily: "inherit",
+  width: "100%",
+  textAlign: "left"
+});
+
+export const sliderHeaderArrow = style({
+  width: 14,
+  height: 14,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: COLORS.text.secondary,
+  flexShrink: 0
+});
+
+export const topRow = style({
+  display: "flex",
+  gap: 10,
+  height: 134,
+  width: "100%"
+});
+
+export const connectivityTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: "0 0 134px",
+    minWidth: 0,
+    padding: 10,
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    justifyContent: "center",
+    overflow: "hidden"
+  }
+]);
+
+export const connectivityRow = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  width: "100%",
+  background: "none",
+  border: "none",
+  padding: 0,
+  margin: 0,
+  cursor: "pointer",
+  color: "inherit",
+  fontFamily: "inherit",
+  textAlign: "left"
+});
+
+export const connectivityText = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 1,
+  flex: 1,
+  minWidth: 0
+});
+
+export const connectivityTitle = style([
+  FONT.bold_11,
+  {
+    color: COLORS.text.primary,
+    letterSpacing: 0.22
+  }
+]);
+
+export const connectivitySubtitle = style([
+  FONT.medium_11,
+  {
+    color: COLORS.text.secondary,
+    fontSize: 10,
+    lineHeight: "11px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  }
+]);
+
+export const connectivityArrow = style({
+  width: 8,
+  height: 14,
+  color: COLORS.text.secondary,
+  display: "flex",
+  alignItems: "center",
+  flexShrink: 0,
+  opacity: 0,
+  transition: "opacity 120ms ease",
+  selectors: {
+    [`${connectivityRow}:hover &`]: { opacity: 1 },
+    [`${connectivityRow}:focus-visible &`]: { opacity: 1 }
+  }
+});
+
+export const rightColumn = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+  flex: "0 0 134px",
+  minWidth: 0,
+  height: "100%"
+});
+
+export const focusTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: "0 0 62px",
+    minHeight: 0,
+    padding: "8px 10px",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    overflow: "hidden",
+    cursor: "pointer",
+    color: "inherit",
+    fontFamily: "inherit",
+    border: "none",
+    width: "100%",
+    textAlign: "left"
+  }
+]);
+
+export const focusLabel = style([
+  FONT.bold_11,
+  {
+    color: COLORS.text.primary,
+    letterSpacing: 0.22,
+    flex: 1,
+    minWidth: 0,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap"
+  }
+]);
+
+export const squareTileRow = style({
+  display: "flex",
+  gap: 10,
+  flex: "0 0 62px",
+  minHeight: 0,
+  width: "100%"
+});
+
+export const squareTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    flex: 1,
+    minWidth: 0,
+    height: "100%",
+    padding: 4,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 2,
+    overflow: "hidden",
+    cursor: "pointer",
+    color: "inherit",
+    fontFamily: "inherit",
+    border: "none"
+  }
+]);
+
+export const squareTileIcon = style({
+  width: 26,
+  height: 26,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: COLORS.text.primary,
+  flexShrink: 0
+});
+
+export const squareTileLabel = style([
+  FONT.medium_11,
+  {
+    fontSize: 10,
+    lineHeight: "11px",
+    color: COLORS.text.primary,
+    textAlign: "center"
+  }
+]);
+
+const sliderTile = style([
+  innerControlPanel,
+  {
+    boxSizing: "border-box",
+    width: "100%",
+    padding: "7px 10px 10px 10px",
+    display: "flex",
+    flexDirection: "column",
+    gap: 5,
+    overflow: "hidden"
+  }
+]);
+
+export const sliderTileLabel = style([
+  FONT.bold_11,
+  {
+    color: COLORS.text.primary,
+    letterSpacing: 0.22
+  }
+]);
+
+export const sliderWithAccessory = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  width: "100%"
+});
+
+export const sliderFlexWrapper = style({
+  flex: 1,
+  minWidth: 0,
+  display: "flex"
+});
+
+export const sliderAccessoryButton = style({
+  width: 26,
+  height: 26,
+  borderRadius: "50%",
+  backgroundColor: COLORS.fill.primary,
+  color: COLORS.text.primary,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexShrink: 0,
+  border: "none",
+  cursor: "pointer",
+  padding: 0
+});
+
+darkModeStyle(squareTileIcon, {
+  color: COLORS.text.primary
+});
+
+export const displaySliderTile = style([sliderTile, { gap: 7 }]);
+export const soundSliderTile = style([sliderTile, { paddingBottom: 12 }]);

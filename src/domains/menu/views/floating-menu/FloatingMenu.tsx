@@ -1,3 +1,4 @@
+import type { Placement } from "@floating-ui/react";
 import { useFloatingMenu } from "domains/menu/hooks/useFloatingMenu";
 import type { ReactNode } from "react";
 import { FloatingMenuContent } from "./FloatingMenuContent";
@@ -5,6 +6,7 @@ import { FloatingMenuContext } from "./FloatingMenuContext";
 import { FloatingMenuTrigger } from "./FloatingMenuTrigger";
 
 interface FloatingMenuProps {
+  placement?: Placement;
   focused: boolean;
   selected: boolean;
   onSelectedChange: (selected: boolean) => void;
@@ -13,19 +15,22 @@ interface FloatingMenuProps {
 
 export function FloatingMenu({
   focused,
+  placement,
   selected,
   onSelectedChange,
   children
 }: FloatingMenuProps) {
-  const { refs, floating, reference, open, onOpenChange } = useFloatingMenu({
-    focused
+  const { refs, floating, reference } = useFloatingMenu({
+    focused,
+    placement,
+    open: selected,
+    onOpenChange: onSelectedChange
   });
+
   const context = {
     focused,
     selected,
     onSelectedChange,
-    open,
-    onOpenChange,
     refs,
     floating,
     reference

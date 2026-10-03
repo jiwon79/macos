@@ -7,11 +7,12 @@ export const container = style({
   position: "absolute",
   bottom: 5,
   left: "50%",
-  transform: "translateX(-50%)",
-  transition: "transform 350ms ease, opacity 250ms ease, visibility 350ms",
+  transformOrigin: "bottom center",
+  translate: "-50% 0",
+  transition: "translate 350ms ease, opacity 250ms ease, visibility 350ms",
   selectors: {
     '&[data-dock-hidden="true"]': {
-      transform: "translate(-50%, 90px)",
+      translate: "-50% 90px",
       opacity: 0,
       visibility: "hidden",
       pointerEvents: "none"
@@ -22,6 +23,7 @@ export const container = style({
   display: "flex",
   alignItems: "end",
   height: 65,
+  width: "max-content",
   padding: "0 5px",
   borderRadius: 16,
 

@@ -71,6 +71,7 @@ function WindowRendererComponent(
     <WindowContext.Provider value={context}>
       <div
         id={id}
+        data-app-window={id}
         data-window-focused={focused}
         data-window-maximized={maximized}
         data-window-fullscreen={fullscreen}

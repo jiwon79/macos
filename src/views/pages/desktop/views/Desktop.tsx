@@ -1,8 +1,10 @@
 import { Dock } from "domains/dock/views";
+import { useMenuRightStore } from "domains/menu/views/menu-right/store";
 import { useWindowsAction, useWindowsStore } from "domains/window/store";
 import { useWindowAnimationStore } from "domains/window-animation/store";
 import { useEffect, useRef } from "react";
-import { useDarkMode } from "utils/browser/index.ts";
+import { cn } from "third-parties/classnames/cn.ts";
+import { colorProvider } from "third-parties/vanilla-extract/styleToken.css.ts";
 import { useDesktopImages } from "../hooks/useDesktopImages";
 import * as styles from "./Desktop.css.ts";
 import { DesktopLoadingScreen } from "./DesktopLoadingScreen";
@@ -11,6 +13,13 @@ import { useFullscreenChrome } from "./useFullscreenChrome";
 import { Windows } from "./Windows";
 
 export function Desktop() {
+  const darkMode = useMenuRightStore((state) => state.display.darkMode);
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "color-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
   const { loading, failed, retry, continueToDesktop } = useDesktopImages();
   if (loading || failed) {
     return (
@@ -95,7 +104,7 @@ function DesktopContent() {
   return (
     <div
       ref={desktopRef}
-      className={styles.desktop}
+      className={cn(styles.desktop, colorProvider)}
       data-desktop-fullscreen={fullscreenWindowID != null}
       data-fullscreen-chrome-visible={fullscreenChrome.visible}
       onMouseMove={fullscreenChrome.onMouseMove}
@@ -111,23 +120,8 @@ function DesktopContent() {
         <DesktopMenu />
       </div>
       <div className={styles.fullscreenBackground} />
-      {fullscreenWindowID == null ? <DarkModeButtonXX /> : null}
       <Windows fullscreenChromeVisible={fullscreenChrome.visible} />
       <Dock hidden={fullscreenWindowID != null} />
     </div>
-  );
-}
-
-function DarkModeButtonXX() {
-  const [darkMode, setDarkMode] = useDarkMode();
-
-  return (
-    <button
-      type="button"
-      onClick={() => setDarkMode(!darkMode)}
-      style={{ position: "absolute", top: 40 }}
-    >
-      {darkMode ? "🌙" : "☀️"}
-    </button>
   );
 }
