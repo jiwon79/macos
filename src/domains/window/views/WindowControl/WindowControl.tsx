@@ -115,6 +115,7 @@ export function WindowControl({ size }: WindowControlProps) {
     <div className={container({ size })}>
       <button
         type="button"
+        aria-label="Close window"
         className={closeIcon}
         onMouseDown={onCloseMouseDown}
       >
@@ -122,6 +123,7 @@ export function WindowControl({ size }: WindowControlProps) {
       </button>
       <button
         type="button"
+        aria-label="Minimize window"
         className={minimizeIcon}
         onMouseDown={onMinimizeMouseDown}
       >
@@ -129,6 +131,7 @@ export function WindowControl({ size }: WindowControlProps) {
       </button>
       <button
         type="button"
+        aria-label="Maximize window"
         className={maximizeIcon}
         onMouseDown={onControlButtonMouseDown}
       >
