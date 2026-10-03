@@ -1,16 +1,26 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { darkModeStyle } from "third-parties/vanilla-extract";
 import { COLORS, FONT } from "third-parties/vanilla-extract/styleToken.css";
-import { controlPanel, innerControlPanel } from "../../styles/panel.css";
-
-export const panel = style([
+import {
   controlPanel,
+  innerControlPanel,
+  settingPanel
+} from "../../styles/panel.css";
+
+export const panel = style({
+  boxSizing: "border-box",
+  width: 298,
+  position: "relative"
+});
+
+export const detailPanel = style([
+  settingPanel,
   {
     boxSizing: "border-box",
-    width: 298,
-    padding: 10,
-    borderRadius: 20,
-    overflow: "hidden"
+    position: "absolute",
+    overflow: "hidden",
+    opacity: "var(--control-view-opacity, 1)",
+    zIndex: 1
   }
 ]);
 
@@ -20,17 +30,56 @@ export const mainContent = style({
   gap: 10
 });
 
-export const subViewWrapper = style({
-  display: "flex",
-  flexDirection: "column"
+const viewContent = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  boxSizing: "border-box"
 });
+
+export const mainView = style([
+  controlPanel,
+  viewContent,
+  {
+    height: 370,
+    padding: 10,
+    overflow: "hidden",
+    opacity: "var(--control-view-opacity, 1)"
+  }
+]);
+
+export const subViewWrapper = style([
+  viewContent,
+  {
+    width: 298,
+    padding: 5,
+    display: "flex",
+    flexDirection: "column",
+    opacity: "var(--control-view-opacity, 1)"
+  }
+]);
 
 export const subViewBody = style({
   display: "flex",
   flexDirection: "column"
 });
 
+export const morphingSlider = style({ position: "absolute", zIndex: 2 });
+
+for (const [view, label] of [
+  ["display", "Display brightness"],
+  ["sound", "Sound volume"]
+]) {
+  // Keep both layout slots measurable, but paint only the shared slider.
+  globalStyle(
+    `${panel}[data-shared-slider="${view}"] ${mainView} [data-control-slider="${label}"], ${panel}[data-shared-slider="${view}"] ${subViewWrapper} [data-control-slider="${label}"]`,
+    { visibility: "hidden" }
+  );
+}
+
 export const sliderHeader = style({
+  height: 14,
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -45,8 +94,8 @@ export const sliderHeader = style({
 });
 
 export const sliderHeaderArrow = style({
-  width: 16,
-  height: 16,
+  width: 14,
+  height: 14,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -65,7 +114,7 @@ export const connectivityTile = style([
   innerControlPanel,
   {
     boxSizing: "border-box",
-    flex: 1,
+    flex: "0 0 134px",
     minWidth: 0,
     padding: 10,
     display: "flex",
@@ -120,17 +169,25 @@ export const connectivitySubtitle = style([
 ]);
 
 export const connectivityArrow = style({
+  width: 8,
+  height: 14,
   color: COLORS.text.secondary,
   display: "flex",
   alignItems: "center",
-  flexShrink: 0
+  flexShrink: 0,
+  opacity: 0,
+  transition: "opacity 120ms ease",
+  selectors: {
+    [`${connectivityRow}:hover &`]: { opacity: 1 },
+    [`${connectivityRow}:focus-visible &`]: { opacity: 1 }
+  }
 });
 
 export const rightColumn = style({
   display: "flex",
   flexDirection: "column",
   gap: 10,
-  flex: 1,
+  flex: "0 0 134px",
   minWidth: 0,
   height: "100%"
 });
@@ -139,7 +196,7 @@ export const focusTile = style([
   innerControlPanel,
   {
     boxSizing: "border-box",
-    flex: 1,
+    flex: "0 0 62px",
     minHeight: 0,
     padding: "8px 10px",
     display: "flex",
@@ -172,7 +229,7 @@ export const focusLabel = style([
 export const squareTileRow = style({
   display: "flex",
   gap: 10,
-  flex: 1,
+  flex: "0 0 62px",
   minHeight: 0,
   width: "100%"
 });
@@ -218,7 +275,7 @@ export const squareTileLabel = style([
   }
 ]);
 
-export const sliderTile = style([
+const sliderTile = style([
   innerControlPanel,
   {
     boxSizing: "border-box",
@@ -270,3 +327,6 @@ export const sliderAccessoryButton = style({
 darkModeStyle(squareTileIcon, {
   color: COLORS.text.primary
 });
+
+export const displaySliderTile = style([sliderTile, { gap: 7 }]);
+export const soundSliderTile = style([sliderTile, { paddingBottom: 12 }]);

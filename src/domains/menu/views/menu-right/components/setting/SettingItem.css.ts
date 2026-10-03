@@ -3,18 +3,25 @@ import { recipe } from "@vanilla-extract/recipes";
 import { COLORS, FONT } from "third-parties/vanilla-extract";
 
 export const container = style({
+  border: 0,
+  background: "none",
+  width: "100%",
+  fontFamily: "inherit",
+  textAlign: "left",
   display: "flex",
   alignItems: "center",
   gap: 8,
   padding: "3px 9px",
-  height: 28,
-  borderRadius: 6,
+  boxSizing: "border-box",
+  height: 32,
+  borderRadius: 4,
   cursor: "pointer",
   userSelect: "none",
 
   ":hover": {
     backgroundColor: COLORS.fill.primary
-  }
+  },
+  ":focus-visible": { outline: "2px solid #3478f6", outlineOffset: -2 }
 });
 
 export const icon = recipe({
@@ -64,5 +71,6 @@ export const accessory = style({
   display: "flex",
   alignItems: "center",
   flexShrink: 0,
+  color: COLORS.text.secondary,
   marginLeft: "auto"
 });

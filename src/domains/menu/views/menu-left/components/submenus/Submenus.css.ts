@@ -1,94 +1,65 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import { darkModeStyle, FONT } from "third-parties/vanilla-extract";
-import { hexAlpha } from "utils/style";
+import { COLORS, FONT } from "third-parties/vanilla-extract";
 
 export const submenuContainer = style({
   display: "flex",
+  flexShrink: 0,
   flexDirection: "column"
 });
-
+export const row = style({ position: "relative" });
 export const submenuButton = recipe({
   base: [
     FONT.body.regular,
     {
+      position: "relative",
+      width: "100%",
       display: "flex",
-      justifyContent: "space-between",
       alignItems: "center",
-
+      gap: 8,
       height: 22,
-      padding: "0 9px",
+      padding: "0 9px 0 22px",
       borderRadius: 4,
-
-      border: "none",
-      outline: "none",
-      backgroundColor: "transparent"
+      border: 0,
+      outline: 0,
+      background: "transparent",
+      color: COLORS.text.primary,
+      textAlign: "left",
+      cursor: "default",
+      whiteSpace: "nowrap"
     }
   ],
   variants: {
     disabled: {
+      true: { opacity: 0.35 },
       false: {
-        ":hover": {
-          backgroundColor: "#007AFF"
-        }
+        ":hover": { background: "#0a84ff", color: "white" },
+        ":focus-visible": { background: "#0a84ff", color: "white" }
       }
     }
   }
 });
-
-const submenuButton__variants_disabled_false =
-  submenuButton.classNames.variants.disabled.false;
-
-darkModeStyle(`${submenuButton__variants_disabled_false}:hover`, {
-  backgroundColor: "#0A84FF"
-});
-
 export const submenuText = recipe({
-  base: {
-    color: hexAlpha("#0A0A0A", 0.9),
-    whiteSpace: "nowrap",
-    width: "fit-content",
-    marginRight: 40
-  },
-  variants: {
-    disabled: {
-      true: {
-        color: hexAlpha("#5A5A5A", 0.4)
-      }
-    }
-  }
+  base: { flex: 1, margin: 0, whiteSpace: "nowrap", color: "inherit" },
+  variants: { disabled: { true: {}, false: {} } }
 });
-
-const submenuText__base = submenuText.classNames.base;
-const submenuText__disabled_true =
-  submenuText.classNames.variants.disabled.true;
-
-darkModeStyle(submenuText__base, {
-  color: "#DFDEDF"
-});
-
-darkModeStyle(submenuText__disabled_true, {
-  color: hexAlpha("#DFDEDF", 0.4)
-});
-
-globalStyle(
-  `${submenuButton__variants_disabled_false}:hover ${submenuText__base}`,
-  {
-    color: "#FFFFFF"
-  }
-);
-
 export const submenuShortcutText = style({
-  color: "rgba(60, 60, 67, 0.40)"
+  marginLeft: 24,
+  color: COLORS.text.secondary,
+  fontSize: 13,
+  letterSpacing: 1,
+  whiteSpace: "nowrap"
 });
-
-darkModeStyle(submenuShortcutText, {
-  color: "rgba(235, 235, 245, 0.40)"
-});
-
 globalStyle(
-  `${submenuButton__variants_disabled_false}:hover ${submenuShortcutText}`,
-  {
-    color: "#FFFFFF"
-  }
+  `${submenuButton.classNames.base}:hover ${submenuShortcutText}, ${submenuButton.classNames.base}:focus-visible ${submenuShortcutText}`,
+  { color: "inherit" }
 );
+export const check = style({
+  position: "absolute",
+  left: 5,
+  fontSize: 12,
+  width: 12,
+  textAlign: "center"
+});
+export const chevron = style({ display: "flex", marginLeft: 16 });
+export const nested = style({ zIndex: 5, minWidth: 210 });

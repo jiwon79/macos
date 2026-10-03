@@ -3,10 +3,15 @@ import { COLORS, FONT } from "third-parties/vanilla-extract";
 
 export const container = recipe({
   base: {
+    boxSizing: "border-box",
+    border: 0,
+    background: "none",
+    textAlign: "left",
+    fontFamily: "inherit",
     height: 22,
     display: "flex",
     alignItems: "center",
-    borderRadius: 6,
+    borderRadius: 4,
     cursor: "pointer",
     userSelect: "none",
 

@@ -12,6 +12,12 @@ export const container = style({
 
 export const inner = recipe({
   base: {
+    border: 0,
+    background: "transparent",
+    font: "inherit",
+    textAlign: "left",
+    boxSizing: "border-box",
+    height: 22,
     display: "flex",
     alignItems: "center",
     width: "100%",

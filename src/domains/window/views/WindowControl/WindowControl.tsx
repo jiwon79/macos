@@ -24,7 +24,7 @@ interface WindowControlProps {
 }
 
 export function WindowControl({ size }: WindowControlProps) {
-  const { id } = useWindowContext();
+  const { id, style } = useWindowContext();
   const windows = useWindowsStore((state) => state.windows);
   const windowElements = useWindowsStore((state) => state.windowElements);
   const { deleteWindow, minimizeWindow } = useWindowsAction();
@@ -76,7 +76,7 @@ export function WindowControl({ size }: WindowControlProps) {
       logging: false,
       useCORS: true
     });
-    const { width, height } = window.style;
+    const { width, height } = style;
     const image = getImageData(windowCanvas, width, height);
     if (image == null) {
       return;
@@ -86,20 +86,20 @@ export function WindowControl({ size }: WindowControlProps) {
       id,
       appID: window.appID,
       imageData: image,
-      window: window.style,
+      window: style,
       target
     });
     startMinimizingWindow({
       id,
       appID: window.appID,
       imageData: image,
-      window: window.style,
+      window: style,
       target
     });
 
     await animateGenieEffect({
       image,
-      window: window.style,
+      window: style,
       getTarget,
       reverse: false
     });

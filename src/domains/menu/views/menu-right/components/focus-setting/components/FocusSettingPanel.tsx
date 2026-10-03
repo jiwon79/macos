@@ -6,8 +6,8 @@ import {
 } from "../../../store";
 import { SettingDivider } from "../../setting/SettingDivider";
 import { SettingItem } from "../../setting/SettingItem";
+import { SettingsLink } from "../../setting/SettingsLink";
 import { SettingTextDepthItem } from "../../setting/SettingTextDepthItem";
-import { SettingTextItem } from "../../setting/SettingTextItem";
 import { SettingTitle } from "../../setting/SettingTitle";
 import * as styles from "./FocusSettingPanel.css";
 
@@ -37,7 +37,7 @@ export function FocusSettingPanel() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-setting-panel="Focus">
       <SettingTitle>Focus</SettingTitle>
       <SettingDivider />
       <SettingItem
@@ -47,18 +47,22 @@ export function FocusSettingPanel() {
       >
         Do Not Disturb
       </SettingItem>
-      <SettingTextDepthItem
-        selected={isDoNotDisturb && duration === "1_hour"}
-        onClick={() => selectDuration("1_hour")}
-      >
-        For 1 hour
-      </SettingTextDepthItem>
-      <SettingTextDepthItem
-        selected={isDoNotDisturb && duration === "until_morning"}
-        onClick={() => selectDuration("until_morning")}
-      >
-        Until tomorrow morning
-      </SettingTextDepthItem>
+      {isDoNotDisturb && (
+        <>
+          <SettingTextDepthItem
+            selected={isDoNotDisturb && duration === "1_hour"}
+            onClick={() => selectDuration("1_hour")}
+          >
+            For 1 hour
+          </SettingTextDepthItem>
+          <SettingTextDepthItem
+            selected={isDoNotDisturb && duration === "until_morning"}
+            onClick={() => selectDuration("until_morning")}
+          >
+            Until tomorrow morning
+          </SettingTextDepthItem>
+        </>
+      )}
       <SettingDivider sub />
       <SettingItem
         icon={<IconFocusWork />}
@@ -75,7 +79,7 @@ export function FocusSettingPanel() {
         Sleep
       </SettingItem>
       <SettingDivider />
-      <SettingTextItem>Focus Settings...</SettingTextItem>
+      <SettingsLink panel="Focus" />
     </div>
   );
 }

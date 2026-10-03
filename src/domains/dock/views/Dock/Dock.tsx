@@ -5,10 +5,12 @@ import {
 } from "assets/app-icons";
 import type { ApplicationID } from "domains/app/applications";
 import { useDockAction } from "domains/dock/store";
+import { fitWindowToViewport } from "domains/window/services/fitWindowToViewport";
 import { useWindowsAction, useWindowsStore } from "domains/window/store/store";
 import { animateGenieEffect } from "domains/window-animation/services/animateGenieEffect";
 import { useWindowAnimationAction } from "domains/window-animation/store";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { getViewportSize, useViewportSize } from "utils/react/useViewportSize";
 import { DockItem } from "../DockItem/DockItem";
 import { WindowDockItem } from "../DockItem/WindowDockItem";
 import { DockSeparator } from "../DockSeparator";
@@ -16,6 +18,9 @@ import * as styles from "./Dock.css";
 
 export function Dock() {
   const dockRef = useRef<HTMLDivElement>(null);
+  const viewport = useViewportSize();
+  const [dockWidth, setDockWidth] = useState(0);
+  const scale = dockWidth ? Math.min(1, (viewport.width - 16) / dockWidth) : 1;
   const windows = useWindowsStore((state) => state.windows);
   const minimizedWindows = useWindowsStore((state) => state.minimizedWindows);
   const isDraggingWindow = useWindowsStore((state) => state.isDraggingWindow);
@@ -39,6 +44,16 @@ export function Dock() {
     }
     return () => setDockElement(null);
   }, [setDockElement]);
+
+  useLayoutEffect(() => {
+    const dock = dockRef.current;
+    if (!dock) return;
+    const measure = () => setDockWidth(dock.offsetWidth);
+    const observer = new ResizeObserver(measure);
+    observer.observe(dock);
+    measure();
+    return () => observer.disconnect();
+  }, []);
 
   const isOpen = (appID: ApplicationID) => {
     return (
@@ -74,11 +89,16 @@ export function Dock() {
       return;
     }
 
-    startRestoringWindow(minimizedWindow);
+    const windowStyle = fitWindowToViewport(
+      windows.find((window) => window.id === windowId)?.style ??
+        minimizedWindow.window,
+      getViewportSize()
+    );
+    startRestoringWindow({ ...minimizedWindow, window: windowStyle });
 
     await animateGenieEffect({
       image: minimizedWindow.imageData,
-      window: minimizedWindow.window,
+      window: windowStyle,
       getTarget: () => {
         const dockRect = dockRef.current?.getBoundingClientRect();
         const rect = getDockItemElement(windowId)?.getBoundingClientRect();
@@ -98,7 +118,9 @@ export function Dock() {
   return (
     <div
       ref={dockRef}
+      data-dock
       className={styles.container}
+      style={{ transform: `translateX(-50%) scale(${scale})` }}
       onMouseMove={(event) => allowHover && setMouseX(event.clientX)}
       onMouseLeave={() => allowHover && setMouseX(null)}
     >

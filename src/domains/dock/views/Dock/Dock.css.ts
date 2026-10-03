@@ -7,11 +7,12 @@ export const container = style({
   position: "absolute",
   bottom: 5,
   left: "50%",
-  transform: "translateX(-50%)",
+  transformOrigin: "bottom center",
 
   display: "flex",
   alignItems: "end",
   height: 65,
+  width: "max-content",
   padding: "0 5px",
   borderRadius: 16,
 

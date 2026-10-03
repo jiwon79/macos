@@ -14,7 +14,7 @@ export const header = style({
   boxSizing: "border-box",
   width: "100%",
   height: 48,
-  padding: "13px 14px",
+  padding: "13px 5px 5px 14px",
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
@@ -70,7 +70,7 @@ export const headerArrowExpanded = style({
 export const collapseList = style({
   boxSizing: "border-box",
   width: "100%",
-  padding: "4px 0",
+  padding: "5px 0",
   display: "flex",
   flexDirection: "column",
   backgroundColor: "rgba(0, 0, 0, 0.07)"
@@ -86,13 +86,15 @@ export const body = style({
 });
 
 export const sliderRow = style({
-  padding: "0 9px 10px 9px"
+  padding: "0 9px 4px"
 });
 
 export const tilesRow = style({
   display: "flex",
   justifyContent: "space-around",
-  padding: "12px 20px",
+  boxSizing: "border-box",
+  height: 87,
+  padding: "13px 20px 8px",
   gap: 24
 });
 
@@ -100,7 +102,7 @@ export const tile = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: 5,
+  gap: 0,
   width: 60,
   background: "none",
   border: "none",
@@ -132,7 +134,8 @@ export const tileLabel = style([
   {
     color: COLORS.text.primary,
     textAlign: "center",
-    lineHeight: "14px"
+    marginTop: 5,
+    lineHeight: "13px"
   }
 ]);
 
@@ -141,10 +144,12 @@ export const tileStatus = style([
   {
     color: COLORS.text.secondary,
     textAlign: "center",
-    lineHeight: "14px"
+    lineHeight: "13px"
   }
 ]);
 
 darkModeStyle(tileCircleActive, {
   color: "white"
 });
+
+export const embedded = style({ width: "100%", boxSizing: "border-box" });

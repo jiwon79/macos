@@ -1,25 +1,18 @@
 import { IconWifi } from "assets/icons";
-import { FloatingMenu } from "domains/menu/views/floating-menu";
+import { useMenuRightStore } from "../../store";
+import { StatusMenu, type StatusMenuProps } from "../StatusMenu";
 import { WifiSettingPanel } from "./components/WifiSettingPanel";
 
-interface WifiSettingProps {
-  selected: boolean;
-  onSelectedChange: (selected: boolean) => void;
-}
-
-export function WifiSetting({ selected, onSelectedChange }: WifiSettingProps) {
+export function WifiSetting(props: StatusMenuProps) {
+  const inactive = useMenuRightStore((state) => !state.wifi.enabled);
   return (
-    <FloatingMenu
-      focused={false}
-      selected={selected}
-      onSelectedChange={onSelectedChange}
+    <StatusMenu
+      {...props}
+      label="Wi-Fi"
+      icon={<IconWifi />}
+      inactive={inactive}
     >
-      <FloatingMenu.Trigger type="icon">
-        <IconWifi />
-      </FloatingMenu.Trigger>
-      <FloatingMenu.Content>
-        <WifiSettingPanel />
-      </FloatingMenu.Content>
-    </FloatingMenu>
+      <WifiSettingPanel />
+    </StatusMenu>
   );
 }

@@ -4,6 +4,12 @@ import { hexAlpha } from "utils/style";
 
 export const container = recipe({
   base: {
+    border: "none",
+    background: "none",
+    cursor: "default",
+    flexShrink: 0,
+    whiteSpace: "nowrap",
+    outlineOffset: -2,
     display: "flex",
     alignItems: "center",
     height: 24,
@@ -24,19 +30,19 @@ export const container = recipe({
       icon: [
         FONT.icon,
         {
-          padding: "2px 11px"
+          padding: "2px 8px"
         }
       ],
       "text-bold": [
-        FONT.headline.regular,
+        FONT.bold_13,
         {
-          padding: "4px 11px"
+          padding: "4px 9px"
         }
       ],
       text: [
-        FONT.body.emphasized,
+        FONT.medium_13,
         {
-          padding: "4px 11px"
+          padding: "4px 9px"
         }
       ]
     }

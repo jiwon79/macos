@@ -5,19 +5,34 @@ interface SettingSubTitleProps {
   disabled?: boolean;
   rightAccessory?: ReactNode;
   children?: ReactNode;
+  onClick?: () => void;
+  expanded?: boolean;
 }
-
 export function SettingSubTitle({
   disabled = true,
   rightAccessory,
-  children
+  children,
+  onClick,
+  expanded
 }: SettingSubTitleProps) {
-  return (
-    <div className={styles.container({ disabled })}>
+  const content = (
+    <>
       <span className={styles.title}>{children}</span>
       {rightAccessory && (
-        <div className={styles.accessory}>{rightAccessory}</div>
+        <span className={styles.accessory}>{rightAccessory}</span>
       )}
-    </div>
+    </>
+  );
+  return onClick ? (
+    <button
+      type="button"
+      className={styles.container({ disabled: false })}
+      onClick={onClick}
+      aria-expanded={expanded}
+    >
+      {content}
+    </button>
+  ) : (
+    <div className={styles.container({ disabled })}>{content}</div>
   );
 }

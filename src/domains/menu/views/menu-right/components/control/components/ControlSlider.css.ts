@@ -33,7 +33,7 @@ export const sliderTrackOutline = style({
   bottom: 0,
   left: 0,
   right: 0,
-  boxShadow: "0px 0px 0px 1px #C0C0C0 inset",
+  boxShadow: "0px 0px 0px 1px rgba(0, 0, 0, 0.10) inset",
   pointerEvents: "none",
   borderRadius: 100,
   zIndex: Z_INDEX.TRACK_OUTLINE
@@ -65,6 +65,7 @@ export const sliderInput = style({
   cursor: "pointer",
   zIndex: Z_INDEX.INPUT,
   margin: 0,
+  ":focus-visible": { outline: "2px solid #007aff", outlineOffset: 2 },
 
   "::-webkit-slider-thumb": {
     appearance: "none",

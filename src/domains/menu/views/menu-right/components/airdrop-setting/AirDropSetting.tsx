@@ -1,28 +1,18 @@
 import { IconAirDrop } from "assets/icons";
-import { FloatingMenu } from "domains/menu/views/floating-menu";
+import { useMenuRightStore } from "../../store";
+import { StatusMenu, type StatusMenuProps } from "../StatusMenu";
 import { AirDropSettingPanel } from "./components/AirDropSettingPanel";
 
-interface AirDropSettingProps {
-  selected: boolean;
-  onSelectedChange: (selected: boolean) => void;
-}
-
-export function AirDropSetting({
-  selected,
-  onSelectedChange
-}: AirDropSettingProps) {
+export function AirDropSetting(props: StatusMenuProps) {
+  const inactive = useMenuRightStore((state) => state.airdrop.mode === "off");
   return (
-    <FloatingMenu
-      focused={false}
-      selected={selected}
-      onSelectedChange={onSelectedChange}
+    <StatusMenu
+      {...props}
+      label="AirDrop"
+      icon={<IconAirDrop />}
+      inactive={inactive}
     >
-      <FloatingMenu.Trigger type="icon">
-        <IconAirDrop />
-      </FloatingMenu.Trigger>
-      <FloatingMenu.Content>
-        <AirDropSettingPanel />
-      </FloatingMenu.Content>
-    </FloatingMenu>
+      <AirDropSettingPanel />
+    </StatusMenu>
   );
 }

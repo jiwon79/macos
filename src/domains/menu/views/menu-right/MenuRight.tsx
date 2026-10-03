@@ -1,50 +1,32 @@
-import { useEffect, useRef, useState } from "react";
+import { useMenuBar } from "../menu/MenuBarContext";
+import { AirDropSetting } from "./components/airdrop-setting/AirDropSetting";
 import { BatterySetting } from "./components/battery-setting/BatterySetting";
+import { BluetoothSetting } from "./components/bluetooth-setting/BluetoothSetting";
 import { Control } from "./components/control/Control";
+import { DisplaySetting } from "./components/display-setting/DisplaySetting";
+import { FocusSetting } from "./components/focus-setting/FocusSetting";
+import { MenuClock } from "./components/MenuClock";
+import { SoundSetting } from "./components/sound-setting/SoundSetting";
 import { WifiSetting } from "./components/wifi-setting/WifiSetting";
-import { container } from "./MenuRight.css";
+import * as styles from "./MenuRight.css";
 
 export function MenuRight() {
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement | null>(null);
-
-  const onSelectedChange = (selected: boolean, name: string) => {
-    if (selected) {
-      setSelectedItem(name);
-    } else {
-      setSelectedItem(null);
-    }
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setSelectedItem(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
+  const { activeMenu, selectMenu } = useMenuBar();
+  const props = (name: string) => ({
+    selected: activeMenu === `status:${name}`,
+    onSelectedChange: (open: boolean) => selectMenu(`status:${name}`, open)
+  });
   return (
-    <div ref={menuRef} className={container}>
-      <BatterySetting
-        selected={selectedItem === "battery"}
-        onSelectedChange={(selected) => onSelectedChange(selected, "battery")}
-      />
-      <WifiSetting
-        selected={selectedItem === "wifi"}
-        onSelectedChange={(selected) => onSelectedChange(selected, "wifi")}
-      />
-      <Control
-        selected={selectedItem === "control-center"}
-        onSelectedChange={(selected) =>
-          onSelectedChange(selected, "control-center")
-        }
-      />
+    <div className={styles.container} data-menu-trailing>
+      <AirDropSetting {...props("AirDrop")} />
+      <BluetoothSetting {...props("Bluetooth")} />
+      <FocusSetting {...props("Focus")} />
+      <DisplaySetting {...props("Display")} />
+      <SoundSetting {...props("Sound")} />
+      <BatterySetting {...props("Battery")} />
+      <WifiSetting {...props("Wi-Fi")} />
+      <Control {...props("Control Center")} />
+      <MenuClock />
     </div>
   );
 }

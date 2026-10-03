@@ -1,38 +1,37 @@
 import {
+  autoUpdate,
   flip,
   offset,
+  type Placement,
   shift,
   useDismiss,
   useFloating,
-  useHover,
   useInteractions
 } from "@floating-ui/react";
 
 interface UseFloatingMenuParams {
+  placement?: Placement;
   focused: boolean;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
 export function useFloatingMenu({
-  focused,
+  placement = "bottom-start",
   open,
   onOpenChange
 }: UseFloatingMenuParams) {
   const { refs, floatingStyles, context } = useFloating({
     open,
     onOpenChange,
-    placement: "bottom-start",
+    whileElementsMounted: autoUpdate,
+    placement,
     middleware: [offset({ mainAxis: 2 }), flip(), shift({ padding: 8 })]
   });
 
-  const hover = useHover(context, { enabled: focused });
   const dismiss = useDismiss(context);
 
-  const { getReferenceProps, getFloatingProps } = useInteractions([
-    hover,
-    dismiss
-  ]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([dismiss]);
 
   return {
     refs,

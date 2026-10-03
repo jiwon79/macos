@@ -5,6 +5,7 @@ type FloatingMenuContext = {
   selected: boolean;
   onSelectedChange: (selected: boolean) => void;
   refs: {
+    floating: React.MutableRefObject<HTMLElement | null>;
     setReference: (element: HTMLElement | null) => void;
     setFloating: (element: HTMLElement | null) => void;
   };

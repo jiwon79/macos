@@ -33,6 +33,7 @@ function _WindowRenderer(
     <WindowContext.Provider value={context}>
       <div
         id={id}
+        data-app-window={id}
         ref={ref}
         style={{
           width: `${width}px`,

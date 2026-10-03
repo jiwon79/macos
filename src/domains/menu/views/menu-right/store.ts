@@ -43,6 +43,7 @@ export interface MenuRightAction {
   setFocusMode: (mode: FocusMode) => void;
   setFocusDuration: (duration: FocusDuration) => void;
   setAirDropMode: (mode: AirDropMode) => void;
+  toggleBluetoothDevice: (name: string) => void;
   setBluetoothEnabled: (enabled: boolean) => void;
   setSoundVolume: (volume: number) => void;
   setSoundMuted: (muted: boolean) => void;
@@ -78,7 +79,9 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
     },
     display: {
       brightness: 75,
-      darkMode: false,
+      darkMode:
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches,
       nightShift: false,
       trueTone: true,
       colorProfile: "Apple XDR Display (P3-1600 nits)"
@@ -90,17 +93,47 @@ export const useMenuRightStore = create<MenuRightState, MenuRightAction>(
       setWifiEnabled: (enabled) =>
         set((state) => ({ wifi: { ...state.wifi, enabled } })),
       setWifiSSID: (ssid) =>
-        set((state) => ({ wifi: { ...state.wifi, selectedSSID: ssid } })),
+        set((state) => ({
+          wifi: { ...state.wifi, selectedSSID: ssid, enabled: true }
+        })),
       setFocusMode: (mode) =>
-        set((state) => ({ focus: { ...state.focus, mode } })),
+        set((state) => ({ focus: { ...state.focus, mode, duration: null } })),
       setFocusDuration: (duration) =>
         set((state) => ({ focus: { ...state.focus, duration } })),
       setAirDropMode: (mode) =>
         set((state) => ({ airdrop: { ...state.airdrop, mode } })),
+      toggleBluetoothDevice: (name) =>
+        set((state) => ({
+          sound: {
+            ...state.sound,
+            output:
+              name === "Jiwon's AirPods Pro" &&
+              state.bluetooth.connectedDevices.includes(name) &&
+              state.sound.output === "AirPods Pro"
+                ? "MacBook Pro Speakers"
+                : state.sound.output
+          },
+          bluetooth: {
+            ...state.bluetooth,
+            connectedDevices: state.bluetooth.connectedDevices.includes(name)
+              ? state.bluetooth.connectedDevices.filter(
+                  (device) => device !== name
+                )
+              : [...state.bluetooth.connectedDevices, name]
+          }
+        })),
       setBluetoothEnabled: (enabled) =>
-        set((state) => ({ bluetooth: { ...state.bluetooth, enabled } })),
+        set((state) => ({
+          bluetooth: { ...state.bluetooth, enabled },
+          sound: {
+            ...state.sound,
+            output: !enabled ? "MacBook Pro Speakers" : state.sound.output
+          }
+        })),
       setSoundVolume: (volume) =>
-        set((state) => ({ sound: { ...state.sound, volume } })),
+        set((state) => ({
+          sound: { ...state.sound, volume, muted: volume === 0 }
+        })),
       setSoundMuted: (muted) =>
         set((state) => ({ sound: { ...state.sound, muted } })),
       setSoundOutput: (output) =>

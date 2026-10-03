@@ -10,8 +10,8 @@ import { cn } from "third-parties/classnames";
 import { useMenuRightActions, useMenuRightStore } from "../../../store";
 import { ControlSlider } from "../../control/components/ControlSlider";
 import { SettingDivider } from "../../setting/SettingDivider";
+import { SettingsLink } from "../../setting/SettingsLink";
 import { SettingTextDepthItem } from "../../setting/SettingTextDepthItem";
-import { SettingTextItem } from "../../setting/SettingTextItem";
 import * as styles from "./DisplaySettingPanel.css";
 
 const COLOR_PROFILES = [
@@ -37,7 +37,12 @@ interface ModeTileProps {
 
 function ModeTile({ icon, label, active, onClick }: ModeTileProps) {
   return (
-    <button type="button" className={styles.tile} onClick={onClick}>
+    <button
+      type="button"
+      className={styles.tile}
+      onClick={onClick}
+      aria-pressed={active}
+    >
       <span
         className={cn(styles.tileCircle, {
           [styles.tileCircleActive]: active
@@ -51,7 +56,11 @@ function ModeTile({ icon, label, active, onClick }: ModeTileProps) {
   );
 }
 
-export function DisplaySettingPanel() {
+export function DisplaySettingPanel({
+  embedded = false
+}: {
+  embedded?: boolean;
+}) {
   const { brightness, darkMode, nightShift, trueTone, colorProfile } =
     useMenuRightStore((state) => state.display);
   const {
@@ -64,10 +73,13 @@ export function DisplaySettingPanel() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={embedded ? styles.embedded : styles.container}
+      data-setting-panel="Display"
+    >
       <div className={styles.header}>
         <div className={styles.headerTextGroup}>
-          <span className={styles.headerTitle}>Display</span>
+          {!embedded && <span className={styles.headerTitle}>Display</span>}
           <span className={styles.headerSubtitle}>{colorProfile}</span>
         </div>
         <button
@@ -98,6 +110,7 @@ export function DisplaySettingPanel() {
       <div className={styles.body}>
         <div className={styles.sliderRow}>
           <ControlSlider
+            label="Display brightness"
             icon={<IconBrightness />}
             value={brightness}
             onChange={setDisplayBrightness}
@@ -124,7 +137,7 @@ export function DisplaySettingPanel() {
           />
         </div>
         <SettingDivider />
-        <SettingTextItem>Display Settings...</SettingTextItem>
+        <SettingsLink panel="Display" />
       </div>
     </div>
   );

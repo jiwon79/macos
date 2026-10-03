@@ -4,5 +4,5 @@ export const container = style({
   display: "flex",
   alignItems: "center",
   height: 24,
-  gap: -4
+  gap: 0
 });

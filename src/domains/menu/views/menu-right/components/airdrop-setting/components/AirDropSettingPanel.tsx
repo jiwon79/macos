@@ -6,7 +6,7 @@ import {
 } from "../../../store";
 import { SettingDivider } from "../../setting/SettingDivider";
 import { SettingItem } from "../../setting/SettingItem";
-import { SettingTextItem } from "../../setting/SettingTextItem";
+import { SettingSwitch } from "../../setting/SettingSwitch";
 import { SettingTitle } from "../../setting/SettingTitle";
 import * as styles from "./AirDropSettingPanel.css";
 
@@ -26,25 +26,36 @@ export function AirDropSettingPanel() {
   const { setAirDropMode } = useMenuRightActions();
 
   const toggle = (next: Exclude<AirDropMode, "off">) => {
-    setAirDropMode(mode === next ? "off" : next);
+    setAirDropMode(next);
   };
 
   return (
-    <div className={styles.container}>
-      <SettingTitle>AirDrop</SettingTitle>
+    <div className={styles.container} data-setting-panel="AirDrop">
+      <SettingTitle
+        rightAccessory={
+          <SettingSwitch
+            label="AirDrop"
+            checked={mode !== "off"}
+            onChange={(checked) =>
+              setAirDropMode(checked ? "contacts_only" : "off")
+            }
+          />
+        }
+      >
+        AirDrop
+      </SettingTitle>
       <SettingDivider />
-      {OPTIONS.map((opt) => (
-        <SettingItem
-          key={opt.value}
-          icon={opt.icon}
-          selected={mode === opt.value}
-          onClick={() => toggle(opt.value)}
-        >
-          {opt.label}
-        </SettingItem>
-      ))}
-      <SettingDivider />
-      <SettingTextItem>AirDrop Settings...</SettingTextItem>
+      {mode !== "off" &&
+        OPTIONS.map((opt) => (
+          <SettingItem
+            key={opt.value}
+            icon={opt.icon}
+            selected={mode === opt.value}
+            onClick={() => toggle(opt.value)}
+          >
+            {opt.label}
+          </SettingItem>
+        ))}
     </div>
   );
 }

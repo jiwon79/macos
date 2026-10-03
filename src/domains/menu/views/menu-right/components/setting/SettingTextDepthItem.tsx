@@ -1,12 +1,12 @@
 import { IconCheck } from "assets/icons";
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { cn } from "third-parties/classnames";
 import * as styles from "./SettingTextDepthItem.css";
 
 interface SettingTextDepthItemProps {
   selected?: boolean;
   children?: ReactNode;
-  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  onClick?: () => void;
 }
 
 export function SettingTextDepthItem({
@@ -14,23 +14,16 @@ export function SettingTextDepthItem({
   children,
   onClick
 }: SettingTextDepthItemProps) {
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (onClick && (event.key === "Enter" || event.key === " ")) {
-      event.preventDefault();
-      onClick(event as unknown as MouseEvent<HTMLDivElement>);
-    }
-  };
-
   return (
     <div className={styles.container}>
-      <div
+      <button
+        type="button"
         className={styles.inner({ selected })}
         onClick={onClick}
-        onKeyDown={handleKeyDown}
-        role={onClick ? "button" : undefined}
-        tabIndex={onClick ? 0 : undefined}
+        aria-pressed={selected}
       >
         <span
+          aria-hidden="true"
           className={cn(styles.iconSlot, {
             [styles.iconSlotHidden]: !selected
           })}
@@ -38,7 +31,7 @@ export function SettingTextDepthItem({
           <IconCheck />
         </span>
         <span className={styles.text}>{children}</span>
-      </div>
+      </button>
     </div>
   );
 }

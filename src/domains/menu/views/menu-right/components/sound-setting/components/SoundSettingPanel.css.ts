@@ -9,5 +9,5 @@ export const container = style([
 ]);
 
 export const sliderRow = style({
-  padding: "2px 9px"
+  padding: "0 9px 5px"
 });

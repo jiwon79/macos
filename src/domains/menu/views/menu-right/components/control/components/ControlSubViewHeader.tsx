@@ -11,7 +11,12 @@ export function ControlSubViewHeader({
   onBack
 }: ControlSubViewHeaderProps) {
   return (
-    <button type="button" className={styles.header} onClick={onBack}>
+    <button
+      type="button"
+      className={styles.header}
+      onClick={onBack}
+      aria-label={`Back to Control Center from ${title}`}
+    >
       <span className={styles.backIcon}>
         <IconRightArrow />
       </span>

@@ -7,6 +7,17 @@ export interface SubmenuConfig {
   name: string;
   shortcut?: string;
   disabled?: boolean;
+  children?: SubmenuConfig[][];
+  checked?: boolean;
+  appID?: ApplicationID;
+  choice?: { group: string; value: string; defaultValue: string };
+  action?:
+    | "new-window"
+    | "close-window"
+    | "show-desktop"
+    | "bring-to-front"
+    | "zoom"
+    | "settings";
 }
 
 export interface AppConfig {
@@ -28,3 +39,5 @@ export interface AppConfig {
     height: number;
   };
 }
+
+import type { ApplicationID } from "../applications";

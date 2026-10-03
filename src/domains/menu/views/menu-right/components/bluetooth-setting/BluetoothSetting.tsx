@@ -1,28 +1,18 @@
 import { IconBluetooth } from "assets/icons";
-import { FloatingMenu } from "domains/menu/views/floating-menu";
+import { useMenuRightStore } from "../../store";
+import { StatusMenu, type StatusMenuProps } from "../StatusMenu";
 import { BluetoothSettingPanel } from "./components/BluetoothSettingPanel";
 
-interface BluetoothSettingProps {
-  selected: boolean;
-  onSelectedChange: (selected: boolean) => void;
-}
-
-export function BluetoothSetting({
-  selected,
-  onSelectedChange
-}: BluetoothSettingProps) {
+export function BluetoothSetting(props: StatusMenuProps) {
+  const inactive = useMenuRightStore((state) => !state.bluetooth.enabled);
   return (
-    <FloatingMenu
-      focused={false}
-      selected={selected}
-      onSelectedChange={onSelectedChange}
+    <StatusMenu
+      {...props}
+      label="Bluetooth"
+      icon={<IconBluetooth />}
+      inactive={inactive}
     >
-      <FloatingMenu.Trigger type="icon">
-        <IconBluetooth />
-      </FloatingMenu.Trigger>
-      <FloatingMenu.Content>
-        <BluetoothSettingPanel />
-      </FloatingMenu.Content>
-    </FloatingMenu>
+      <BluetoothSettingPanel />
+    </StatusMenu>
   );
 }

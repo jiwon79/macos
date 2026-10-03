@@ -1,11 +1,14 @@
 import { applications } from "domains/app/applications";
+import { fitWindowToViewport } from "domains/window/services/fitWindowToViewport";
 import { useWindowsAction, useWindowsStore } from "domains/window/store";
 import { WindowRenderer } from "domains/window/views/WindowRenderer/WindowRenderer";
+import { useViewportSize } from "utils/react/useViewportSize";
 
 export function Windows() {
   const windows = useWindowsStore((state) => state.windows);
   const minimizedWindows = useWindowsStore((state) => state.minimizedWindows);
   const { updateWindow, setWindowRef } = useWindowsAction();
+  const viewport = useViewportSize();
 
   const notMinimizedWindows = windows.filter(
     (window) =>
@@ -19,6 +22,8 @@ export function Windows() {
       {notMinimizedWindows.map((window) => {
         const app = applications[window.appID];
         const resizable = app?.resizable ?? true;
+        // Preserve the preferred geometry when the viewport temporarily shrinks.
+        const visibleStyle = fitWindowToViewport(window.style, viewport);
 
         return (
           <WindowRenderer
@@ -29,7 +34,7 @@ export function Windows() {
               }
             }}
             id={window.id}
-            style={window.style}
+            style={visibleStyle}
             resizable={resizable}
             onStyleChange={(style) => {
               updateWindow(window.id, { style });

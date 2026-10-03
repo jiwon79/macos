@@ -8,8 +8,13 @@ export const container = recipe({
     alignItems: "center",
     justifyContent: "space-between",
     padding: "0 9px",
-    height: 26,
-    borderRadius: 6,
+    boxSizing: "border-box",
+    border: 0,
+    background: "none",
+    textAlign: "left",
+    fontFamily: "inherit",
+    height: 22,
+    borderRadius: 4,
     userSelect: "none"
   },
   variants: {

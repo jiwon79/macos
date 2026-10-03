@@ -1,4 +1,4 @@
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 import * as styles from "./SettingItem.css";
 
 interface SettingItemProps {
@@ -6,36 +6,38 @@ interface SettingItemProps {
   icon?: ReactNode;
   rightAccessory?: ReactNode;
   children?: ReactNode;
-  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
-
 export function SettingItem({
-  selected = false,
+  selected,
   icon,
   rightAccessory,
   children,
   onClick
 }: SettingItemProps) {
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (onClick && (event.key === "Enter" || event.key === " ")) {
-      event.preventDefault();
-      onClick(event as unknown as MouseEvent<HTMLDivElement>);
-    }
-  };
-
-  return (
-    <div
+  const content = (
+    <>
+      {icon && (
+        <span className={styles.icon({ selected: selected ?? false })}>
+          {icon}
+        </span>
+      )}
+      <span className={styles.content}>{children}</span>
+      {rightAccessory && (
+        <span className={styles.accessory}>{rightAccessory}</span>
+      )}
+    </>
+  );
+  return onClick ? (
+    <button
+      type="button"
       className={styles.container}
       onClick={onClick}
-      onKeyDown={handleKeyDown}
-      role={onClick ? "button" : undefined}
-      tabIndex={onClick ? 0 : undefined}
+      aria-pressed={selected}
     >
-      {icon && <div className={styles.icon({ selected })}>{icon}</div>}
-      <div className={styles.content}>{children}</div>
-      {rightAccessory && (
-        <div className={styles.accessory}>{rightAccessory}</div>
-      )}
-    </div>
+      {content}
+    </button>
+  ) : (
+    <div className={styles.container}>{content}</div>
   );
 }

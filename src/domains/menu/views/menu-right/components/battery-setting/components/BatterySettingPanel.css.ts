@@ -7,3 +7,5 @@ export const container = style([
     padding: 5
   }
 ]);
+
+export const powerSource = style({ height: 18, overflow: "hidden" });

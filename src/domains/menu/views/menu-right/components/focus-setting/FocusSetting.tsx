@@ -1,28 +1,18 @@
 import { IconFocus } from "assets/icons";
-import { FloatingMenu } from "domains/menu/views/floating-menu";
+import { useMenuRightStore } from "../../store";
+import { StatusMenu, type StatusMenuProps } from "../StatusMenu";
 import { FocusSettingPanel } from "./components/FocusSettingPanel";
 
-interface FocusSettingProps {
-  selected: boolean;
-  onSelectedChange: (selected: boolean) => void;
-}
-
-export function FocusSetting({
-  selected,
-  onSelectedChange
-}: FocusSettingProps) {
+export function FocusSetting(props: StatusMenuProps) {
+  const inactive = useMenuRightStore((state) => state.focus.mode === null);
   return (
-    <FloatingMenu
-      focused={false}
-      selected={selected}
-      onSelectedChange={onSelectedChange}
+    <StatusMenu
+      {...props}
+      label="Focus"
+      icon={<IconFocus />}
+      inactive={inactive}
     >
-      <FloatingMenu.Trigger type="icon">
-        <IconFocus />
-      </FloatingMenu.Trigger>
-      <FloatingMenu.Content>
-        <FocusSettingPanel />
-      </FloatingMenu.Content>
-    </FloatingMenu>
+      <FocusSettingPanel />
+    </StatusMenu>
   );
 }

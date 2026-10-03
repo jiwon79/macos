@@ -1,28 +1,20 @@
 import { IconSound } from "assets/icons";
-import { FloatingMenu } from "domains/menu/views/floating-menu";
+import { useMenuRightStore } from "../../store";
+import { StatusMenu, type StatusMenuProps } from "../StatusMenu";
 import { SoundSettingPanel } from "./components/SoundSettingPanel";
 
-interface SoundSettingProps {
-  selected: boolean;
-  onSelectedChange: (selected: boolean) => void;
-}
-
-export function SoundSetting({
-  selected,
-  onSelectedChange
-}: SoundSettingProps) {
+export function SoundSetting(props: StatusMenuProps) {
+  const inactive = useMenuRightStore(
+    (state) => state.sound.volume === 0 || state.sound.muted
+  );
   return (
-    <FloatingMenu
-      focused={false}
-      selected={selected}
-      onSelectedChange={onSelectedChange}
+    <StatusMenu
+      {...props}
+      label="Sound"
+      icon={<IconSound />}
+      inactive={inactive}
     >
-      <FloatingMenu.Trigger type="icon">
-        <IconSound />
-      </FloatingMenu.Trigger>
-      <FloatingMenu.Content>
-        <SoundSettingPanel />
-      </FloatingMenu.Content>
-    </FloatingMenu>
+      <SoundSettingPanel />
+    </StatusMenu>
   );
 }

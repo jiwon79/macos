@@ -1,14 +1,22 @@
 import { Dock } from "domains/dock/views";
+import { useMenuRightStore } from "domains/menu/views/menu-right/store";
 import { useWindowsAction } from "domains/window/store";
+import { useEffect } from "react";
 import { cn } from "third-parties/classnames/cn.ts";
 import { colorProvider } from "third-parties/vanilla-extract/styleToken.css.ts";
-import { useDarkMode } from "utils/browser/index.ts";
 import * as styles from "./Desktop.css.ts";
 import { DesktopMenu } from "./DesktopMenu";
 import { Windows } from "./Windows";
 
 export function Desktop() {
   const { setFocusedWindowID } = useWindowsAction();
+  const darkMode = useMenuRightStore((state) => state.display.darkMode);
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "color-theme",
+      darkMode ? "dark" : "light"
+    );
+  }, [darkMode]);
 
   return (
     <div
@@ -16,23 +24,8 @@ export function Desktop() {
       onMouseDown={() => setFocusedWindowID(null)}
     >
       <DesktopMenu />
-      <DarkModeButtonXX />
       <Windows />
       <Dock />
     </div>
-  );
-}
-
-function DarkModeButtonXX() {
-  const [darkMode, setDarkMode] = useDarkMode();
-
-  return (
-    <button
-      type="button"
-      onClick={() => setDarkMode(!darkMode)}
-      style={{ position: "absolute", top: 40 }}
-    >
-      {darkMode ? "🌙" : "☀️"}
-    </button>
   );
 }

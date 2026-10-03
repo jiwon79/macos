@@ -10,8 +10,8 @@ import {
   IconStageManager,
   IconWifi
 } from "assets/icons";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useMenuRightActions, useMenuRightStore } from "../../../store";
 import * as styles from "./ControlPanel.css";
 import { ControlSlider } from "./ControlSlider";
@@ -29,17 +29,40 @@ import {
 } from "./ControlSubViews";
 import { IconCircle } from "./IconCircle";
 import { MediaControl } from "./MediaControl";
+import { MorphingSlider, type SliderMorph } from "./MorphingSlider";
 
 type View = "main" | SubViewName;
 
-const transition = { duration: 0.18, ease: "easeOut" } as const;
+// Estimated from the 60fps macOS capture: most growth occurs in the first
+// 100ms, followed by a short, non-bouncing settle around 220–240ms.
+const MORPH_TRANSITION = {
+  duration: 0.24,
+  ease: [0.18, 0.85, 0.25, 1]
+} as const;
+
+// Keep opacity and tile geometry on Motion's frame loop. Native opacity
+// animations can briefly expose the old inline style when they finish.
+const VIEW_OPACITY: string = "--control-view-opacity";
+
+type TileBounds = { left: number; top: number; width: number; height: number };
+const SOURCE_TILE: Record<SubViewName, string> = {
+  wifi: "connectivity",
+  bluetooth: "connectivity",
+  airdrop: "connectivity",
+  focus: "focus",
+  display: "display",
+  sound: "sound",
+  "screen-mirroring": "screen-mirroring"
+};
 
 interface MainViewProps {
   onNavigate: (view: SubViewName) => void;
 }
 
 function MainView({ onNavigate }: MainViewProps) {
-  const wifiSSID = useMenuRightStore((state) => state.wifi.selectedSSID);
+  const { enabled: wifiEnabled, selectedSSID: wifiSSID } = useMenuRightStore(
+    (state) => state.wifi
+  );
   const airdropMode = useMenuRightStore((state) => state.airdrop.mode);
   const bluetoothEnabled = useMenuRightStore(
     (state) => state.bluetooth.enabled
@@ -68,22 +91,25 @@ function MainView({ onNavigate }: MainViewProps) {
   return (
     <div className={styles.mainContent}>
       <div className={styles.topRow}>
-        <div className={styles.connectivityTile}>
+        <div
+          className={styles.connectivityTile}
+          data-control-source="connectivity"
+        >
           <button
             type="button"
             className={styles.connectivityRow}
             onClick={() => onNavigate("wifi")}
           >
-            <IconCircle variant="blue">
+            <IconCircle variant={wifiEnabled ? "blue" : "neutral"}>
               <IconWifi />
             </IconCircle>
             <div className={styles.connectivityText}>
               <span className={styles.connectivityTitle}>Wi-Fi</span>
               <span className={styles.connectivitySubtitle}>
-                {wifiSSID ?? "Off"}
+                {wifiEnabled ? (wifiSSID ?? "Not Connected") : "Off"}
               </span>
             </div>
-            <span className={styles.connectivityArrow}>
+            <span className={styles.connectivityArrow} aria-hidden="true">
               <IconRightArrow />
             </span>
           </button>
@@ -102,6 +128,9 @@ function MainView({ onNavigate }: MainViewProps) {
                 {bluetoothEnabled ? "On" : "Off"}
               </span>
             </div>
+            <span className={styles.connectivityArrow} aria-hidden="true">
+              <IconRightArrow />
+            </span>
           </button>
 
           <button
@@ -118,6 +147,9 @@ function MainView({ onNavigate }: MainViewProps) {
                 {airdropSubtitle}
               </span>
             </div>
+            <span className={styles.connectivityArrow} aria-hidden="true">
+              <IconRightArrow />
+            </span>
           </button>
         </div>
 
@@ -125,6 +157,7 @@ function MainView({ onNavigate }: MainViewProps) {
           <button
             type="button"
             className={styles.focusTile}
+            data-control-source="focus"
             onClick={() => onNavigate("focus")}
           >
             <IconCircle variant={focusMode ? "blue" : "neutral"}>
@@ -147,6 +180,8 @@ function MainView({ onNavigate }: MainViewProps) {
             <button
               type="button"
               className={styles.squareTile}
+              aria-label="Screen Mirroring"
+              data-control-source="screen-mirroring"
               onClick={() => onNavigate("screen-mirroring")}
             >
               <div className={styles.squareTileIcon}>
@@ -162,7 +197,7 @@ function MainView({ onNavigate }: MainViewProps) {
         </div>
       </div>
 
-      <div className={styles.sliderTile}>
+      <div className={styles.displaySliderTile} data-control-source="display">
         <button
           type="button"
           className={styles.sliderHeader}
@@ -174,13 +209,14 @@ function MainView({ onNavigate }: MainViewProps) {
           </span>
         </button>
         <ControlSlider
+          label="Display brightness"
           icon={<IconBrightness />}
           value={brightness}
           onChange={setDisplayBrightness}
         />
       </div>
 
-      <div className={styles.sliderTile}>
+      <div className={styles.soundSliderTile} data-control-source="sound">
         <button
           type="button"
           className={styles.sliderHeader}
@@ -194,12 +230,18 @@ function MainView({ onNavigate }: MainViewProps) {
         <div className={styles.sliderWithAccessory}>
           <div className={styles.sliderFlexWrapper}>
             <ControlSlider
+              label="Sound volume"
               icon={<IconSound />}
               value={volume}
               onChange={setSoundVolume}
             />
           </div>
-          <button type="button" className={styles.sliderAccessoryButton}>
+          <button
+            type="button"
+            className={styles.sliderAccessoryButton}
+            aria-label="Choose sound output"
+            onClick={() => onNavigate("sound")}
+          >
             <IconAirPlay />
           </button>
         </div>
@@ -235,43 +277,198 @@ function SubViewBody({ view }: SubViewProps) {
 
 export function ControlPanel() {
   const [view, setView] = useState<View>("main");
+  const [height, setHeight] = useState(370);
+  const [sliderMorph, setSliderMorph] = useState<SliderMorph | null>(null);
+  const [origin, setOrigin] = useState<TileBounds>({
+    left: 10,
+    top: 10,
+    width: 134,
+    height: 134
+  });
+  const panelRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+
+  const navigate = (next: SubViewName) => {
+    const panel = panelRef.current;
+    const tile = panel?.querySelector<HTMLElement>(
+      `[data-control-source="${SOURCE_TILE[next]}"]`
+    );
+    if (panel && tile) {
+      const parent = panel.getBoundingClientRect();
+      const bounds = tile.getBoundingClientRect();
+      // Account for the small opening scale if a tile is clicked immediately.
+      const scale = parent.width / panel.offsetWidth;
+      setOrigin({
+        left: (bounds.left - parent.left) / scale,
+        top: (bounds.top - parent.top) / scale,
+        width: bounds.width / scale,
+        height: bounds.height / scale
+      });
+      if (!reduceMotion && (next === "display" || next === "sound")) {
+        const slider = tile.querySelector<HTMLElement>("[data-control-slider]");
+        if (slider) {
+          const rect = slider.getBoundingClientRect();
+          const origin = {
+            left: (rect.left - parent.left) / scale,
+            top: (rect.top - parent.top) / scale,
+            width: rect.width / scale,
+            height: rect.height / scale
+          };
+          setSliderMorph({ view: next, origin, target: origin });
+        }
+      } else {
+        setSliderMorph(null);
+      }
+    }
+    setView(next);
+  };
+
+  useLayoutEffect(() => {
+    if (mainRef.current) mainRef.current.inert = view !== "main";
+    if (view === "main") {
+      setHeight(370);
+      return;
+    }
+    const content = panelRef.current?.querySelector<HTMLElement>(
+      `[data-control-view="${view}"]`
+    );
+    if (!content) return;
+    const measure = () => {
+      setHeight(content.offsetHeight);
+      const slider = content.querySelector<HTMLElement>(
+        "[data-control-slider]"
+      );
+      const panel = panelRef.current;
+      if (!slider || !panel) return;
+      const scale = panel.getBoundingClientRect().width / panel.offsetWidth;
+      const contentBox = content.getBoundingClientRect();
+      const box = slider.getBoundingClientRect();
+      const target = {
+        left: (box.left - contentBox.left) / scale,
+        top: (box.top - contentBox.top) / scale,
+        width: box.width / scale,
+        height: box.height / scale
+      };
+      setSliderMorph((current) =>
+        current && current.view === view ? { ...current, target } : current
+      );
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, [view]);
+
+  const geometryTransition = reduceMotion ? { duration: 0 } : MORPH_TRANSITION;
 
   return (
     <motion.div
+      ref={panelRef}
       className={styles.panel}
-      layout
-      transition={{ layout: { duration: 0.28, ease: [0.32, 0.72, 0, 1] } }}
+      data-control-panel
+      data-shared-slider={sliderMorph?.view}
+      initial={false}
+      animate={{ height }}
+      transition={geometryTransition}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowLeft" && view !== "main") {
+          event.preventDefault();
+          setView("main");
+        }
+      }}
     >
-      <AnimatePresence mode="popLayout" initial={false}>
-        {view === "main" ? (
-          <motion.div
-            key="main"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={transition}
-          >
-            <MainView onNavigate={setView} />
-          </motion.div>
-        ) : (
+      <motion.div
+        ref={mainRef}
+        className={styles.mainView}
+        data-control-view="main"
+        aria-hidden={view !== "main"}
+        initial={false}
+        animate={{ [VIEW_OPACITY]: view === "main" ? 1 : 0 }}
+        transition={{
+          duration: reduceMotion
+            ? 0
+            : sliderMorph && view === "main"
+              ? 0.08
+              : 0.16,
+          delay: reduceMotion || view !== "main" || sliderMorph ? 0 : 0.04,
+          ease: "linear"
+        }}
+        style={{ pointerEvents: view === "main" ? "auto" : "none" }}
+      >
+        <MainView onNavigate={navigate} />
+      </motion.div>
+      <AnimatePresence>
+        {view !== "main" && (
           <motion.div
             key={view}
-            className={styles.subViewWrapper}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={transition}
+            className={styles.detailPanel}
+            data-control-morph
+            initial={
+              reduceMotion
+                ? false
+                : { ...origin, borderRadius: 10, [VIEW_OPACITY]: 0 }
+            }
+            animate={{
+              left: 0,
+              top: 0,
+              width: 298,
+              height,
+              borderRadius: 6,
+              [VIEW_OPACITY]: 1
+            }}
+            exit={{
+              ...origin,
+              borderRadius: 10,
+              [VIEW_OPACITY]: 0,
+              transition: {
+                ...geometryTransition,
+                [VIEW_OPACITY]: {
+                  duration: reduceMotion ? 0 : 0.12,
+                  delay: reduceMotion || sliderMorph ? 0 : 0.08
+                }
+              }
+            }}
+            transition={{
+              ...geometryTransition,
+              [VIEW_OPACITY]: {
+                duration: reduceMotion ? 0 : 0.08,
+                ease: "linear"
+              }
+            }}
           >
-            <ControlSubViewHeader
-              title={SUB_VIEW_TITLES[view]}
-              onBack={() => setView("main")}
-            />
-            <div className={styles.subViewBody}>
-              <SubViewBody view={view} />
-            </div>
+            <motion.div
+              data-control-view={view}
+              className={styles.subViewWrapper}
+              initial={{ [VIEW_OPACITY]: reduceMotion ? 1 : 0.35 }}
+              animate={{ [VIEW_OPACITY]: 1 }}
+              exit={{ [VIEW_OPACITY]: 0 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.12,
+                delay: 0,
+                ease: "linear"
+              }}
+            >
+              <ControlSubViewHeader
+                title={SUB_VIEW_TITLES[view]}
+                onBack={() => setView("main")}
+              />
+              <div className={styles.subViewBody}>
+                <SubViewBody view={view} />
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+      {sliderMorph && (
+        <MorphingSlider
+          key={sliderMorph.view}
+          slider={sliderMorph}
+          returning={view === "main"}
+          transition={geometryTransition}
+          onReturnComplete={() => setSliderMorph(null)}
+        />
+      )}
     </motion.div>
   );
 }

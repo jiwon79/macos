@@ -10,6 +10,8 @@ export const keypad = recipe({
     outline: "none",
     border: "none",
     fontSize: 21,
+    minWidth: 0,
+    minHeight: 0,
     color: COLORS.white
   },
   variants: {

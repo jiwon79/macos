@@ -18,15 +18,28 @@ const INNER_BOX_SHADOW_DARK = `
       0px 0px 1.5px 0px rgba(0, 0, 0, 0.50),
       0px 2px 8px 0px rgba(0, 0, 0, 0.15)`;
 
+export const SETTING_SURFACE = {
+  backgroundColor: "rgba(224, 224, 224, 0.64)",
+  boxShadow: OUTER_BOX_SHADOW,
+  backdropFilter: "blur(60px)"
+};
+export const SETTING_SURFACE_DARK = {
+  backgroundColor: "rgba(41, 41, 41, 0.63)",
+  boxShadow: OUTER_BOX_SHADOW_DARK,
+  backdropFilter: "blur(80px)"
+};
+
 export const settingPanel = style({
+  boxSizing: "border-box",
   width: 298,
+  maxWidth: "calc(100vw - 16px)",
   display: "flex",
   flexDirection: "column",
   borderRadius: 6,
 
-  backgroundColor: "rgba(224, 224, 224, 0.64)",
-  boxShadow: OUTER_BOX_SHADOW,
-  backdropFilter: "blur(60px)"
+  backgroundColor: `var(--setting-panel-background, ${SETTING_SURFACE.backgroundColor})`,
+  boxShadow: `var(--setting-panel-shadow, ${OUTER_BOX_SHADOW})`,
+  backdropFilter: "var(--setting-panel-backdrop-filter, blur(60px))"
 });
 
 export const controlPanel = style({
@@ -50,9 +63,9 @@ export const innerControlPanel = style({
 });
 
 darkModeStyle(settingPanel, {
-  backgroundColor: "rgba(41, 41, 41, 0.63)",
-  boxShadow: OUTER_BOX_SHADOW_DARK,
-  backdropFilter: "blur(80px)"
+  backgroundColor: `var(--setting-panel-background, ${SETTING_SURFACE_DARK.backgroundColor})`,
+  boxShadow: `var(--setting-panel-shadow, ${OUTER_BOX_SHADOW_DARK})`,
+  backdropFilter: "var(--setting-panel-backdrop-filter, blur(80px))"
 });
 
 darkModeStyle(controlPanel, {

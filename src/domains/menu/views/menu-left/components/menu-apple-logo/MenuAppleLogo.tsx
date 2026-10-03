@@ -19,7 +19,9 @@ export function MenuAppleLogo({
       selected={selected}
       onSelectedChange={onSelectedChange}
     >
-      <FloatingMenu.Trigger type="icon"></FloatingMenu.Trigger>
+      <FloatingMenu.Trigger type="icon" aria-label="Apple">
+        
+      </FloatingMenu.Trigger>
       <FloatingMenu.Content>
         <SubmenuGroup submenuGroup={menuAppleconfig.submenuGroups} />
       </FloatingMenu.Content>
