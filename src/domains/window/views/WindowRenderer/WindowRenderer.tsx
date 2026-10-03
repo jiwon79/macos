@@ -13,7 +13,7 @@ export interface WindowRendererProps {
   children: React.ReactNode;
 }
 
-function _WindowRenderer(
+function WindowRendererComponent(
   { id, style, onStyleChange, resizable = true, children }: WindowRendererProps,
   ref: React.Ref<HTMLDivElement>
 ) {
@@ -54,4 +54,4 @@ function _WindowRenderer(
   );
 }
 
-export const WindowRenderer = forwardRef(_WindowRenderer);
+export const WindowRenderer = forwardRef(WindowRendererComponent);

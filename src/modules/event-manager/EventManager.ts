@@ -32,7 +32,9 @@ export class EventManager<
     if (!this.listeners[type]) {
       return;
     }
-    this.listeners[type].forEach((listener) => listener(event));
+    this.listeners[type].forEach((listener) => {
+      listener(event);
+    });
   }
 
   destroy() {
