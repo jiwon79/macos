@@ -26,38 +26,44 @@ interface MultiResizableContainerProps {
   onResizeStart?: ResizeHandlerBaseProps["onResizeStart"];
   onResizeEnd?: ResizeHandlerBaseProps["onResizeEnd"];
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 export function MultiDirectionResizableContainer({
   onResize,
   onResizeStart,
   onResizeEnd,
-  children
+  children,
+  disabled = false
 }: MultiResizableContainerProps) {
   const frameRef = useRef<HTMLDivElement>(null);
 
   return (
     <div ref={frameRef} style={{ width: "100%", height: "100%" }}>
-      {lineResizeHandlerPositions.map((position) => (
-        <LineResizeHandler
-          frameRef={frameRef}
-          position={position}
-          onResize={onResize}
-          onResizeStart={onResizeStart}
-          onResizeEnd={onResizeEnd}
-          key={position}
-        />
-      ))}
-      {pointResizeHandlerPositions.map((position) => (
-        <CornerResizeHandler
-          frameRef={frameRef}
-          position={position}
-          onResize={onResize}
-          onResizeStart={onResizeStart}
-          onResizeEnd={onResizeEnd}
-          key={position}
-        />
-      ))}
+      {disabled
+        ? null
+        : lineResizeHandlerPositions.map((position) => (
+            <LineResizeHandler
+              frameRef={frameRef}
+              position={position}
+              onResize={onResize}
+              onResizeStart={onResizeStart}
+              onResizeEnd={onResizeEnd}
+              key={position}
+            />
+          ))}
+      {disabled
+        ? null
+        : pointResizeHandlerPositions.map((position) => (
+            <CornerResizeHandler
+              frameRef={frameRef}
+              position={position}
+              onResize={onResize}
+              onResizeStart={onResizeStart}
+              onResizeEnd={onResizeEnd}
+              key={position}
+            />
+          ))}
       {children}
     </div>
   );

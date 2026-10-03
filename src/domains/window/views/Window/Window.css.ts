@@ -19,6 +19,7 @@ export const container = style({
       boxShadow: `0px 0px 3px 0px rgba(255, 255, 255, 0.10) inset,
         0px 20px 40px 0px rgba(0, 0, 0, 0.45),
         0px 0px 3px 0px rgba(0, 0, 0, 0.55)`
-    }
+    },
+    '[data-window-fullscreen="true"] &': { borderRadius: 0, boxShadow: "none" }
   }
 });

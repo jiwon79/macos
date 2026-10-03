@@ -25,7 +25,7 @@ export const container = recipe({
   }
 });
 
-globalStyle(`${container.classNames.base}:hover svg`, {
+globalStyle(`${container.classNames.base}:hover button:not(:disabled) svg`, {
   display: "block"
 });
 
@@ -40,6 +40,8 @@ const icon = style({
   alignItems: "center",
   justifyContent: "center"
 });
+
+globalStyle(`${icon}:disabled`, { backgroundColor: "#6B6B6B" });
 
 globalStyle(`${icon} svg`, {
   display: "none"
@@ -71,6 +73,9 @@ export const maximizeIcon = style([
     backgroundColor: "#28CA41",
     ":active": {
       backgroundColor: "#88ff96"
+    },
+    ":disabled": {
+      backgroundColor: "#6B6B6B"
     }
   }
 ]);

@@ -14,7 +14,7 @@ import { WindowDockItem } from "../DockItem/WindowDockItem";
 import { DockSeparator } from "../DockSeparator";
 import * as styles from "./Dock.css";
 
-export function Dock() {
+export function Dock({ hidden = false }: { hidden?: boolean }) {
   const dockRef = useRef<HTMLDivElement>(null);
   const windows = useWindowsStore((state) => state.windows);
   const minimizedWindows = useWindowsStore((state) => state.minimizedWindows);
@@ -99,6 +99,8 @@ export function Dock() {
     <div
       ref={dockRef}
       className={styles.container}
+      data-dock-hidden={hidden}
+      aria-hidden={hidden || undefined}
       onMouseMove={(event) => allowHover && setMouseX(event.clientX)}
       onMouseLeave={() => allowHover && setMouseX(null)}
     >

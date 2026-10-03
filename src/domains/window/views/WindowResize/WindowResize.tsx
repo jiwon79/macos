@@ -8,9 +8,13 @@ import { useWindowContext } from "../WindowContext";
 
 interface WindowResizeProps {
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
-export function WindowResize({ children }: WindowResizeProps) {
+export function WindowResize({
+  children,
+  disabled = false
+}: WindowResizeProps) {
   const { style, onStyleChange } = useWindowContext();
   const { setIsResizingWindow } = useWindowsAction();
   const initialStyleRef = useRef<WindowStyle | undefined>(undefined);
@@ -72,6 +76,7 @@ export function WindowResize({ children }: WindowResizeProps) {
 
   return (
     <MultiDirectionResizableContainer
+      disabled={disabled}
       onResize={handleResize}
       onResizeStart={handleResizeStart}
       onResizeEnd={handleResizeEnd}
