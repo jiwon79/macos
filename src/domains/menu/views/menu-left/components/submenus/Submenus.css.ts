@@ -33,6 +33,7 @@ export const submenuButton = recipe({
     disabled: {
       true: { opacity: 0.35 },
       false: {
+        cursor: "pointer",
         ":hover": { background: "#0a84ff", color: "white" },
         ":focus-visible": { background: "#0a84ff", color: "white" }
       }
